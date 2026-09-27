@@ -3,7 +3,9 @@ import { ArrowRight, DownloadIcon, Icon, MailIcon } from '@/components/icons'
 import { SponsorWall } from '@/components/sponsors/SponsorWall'
 import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
+import { notFound } from 'next/navigation'
 import { getSite, getSponsorGroups, getSponsorsPage } from '@/lib/content'
+import { SPONSORS_PAGE_LIVE } from '@/lib/nav'
 import styles from './page.module.css'
 
 export const revalidate = 3600
@@ -18,6 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SponsorsPage() {
+  if (!SPONSORS_PAGE_LIVE) notFound()
   const [page, groups, site] = await Promise.all([getSponsorsPage(), getSponsorGroups(), getSite()])
   const email = site.contact.sponsorship
   const mailto = `mailto:${email}?subject=${encodeURIComponent('Sponsoring VT CRO')}`

@@ -58,6 +58,18 @@ To see everyone on a team, open the team and click its **Members** tab (top of t
 
 1. Click **Download a blank template**, or use your own Google Sheet, Excel file or Google Form responses. Only a **Name** column is required. Other recognized columns are *Teams, Role, Major, Graduation year, LinkedIn, Website, GitHub, Email, Status*. Column headers can be worded freely, so Google Form questions work as they are.
 2. **Teams**: team names or codes separated by commas, e.g. `AutoNav, Outreach` or `NAV; VEX`.
+
+   Example (the template has these columns; any column except Name can be left out or left blank):
+
+   | Name | Teams | Role | Major | Graduation year | LinkedIn | Website | GitHub | Email | Status |
+   |---|---|---|---|---|---|---|---|---|---|
+   | Jane Doe | AutoNav, Outreach | | Computer Engineering | 2028 | linkedin.com/in/janedoe | | github.com/janedoe | jdoe@vt.edu | Active |
+   | Sam Lee | VEX | Software Lead | Mechanical Engineering | 2027 | | | | | |
+
+   - **Role** applies to every team in that row. It is optional; empty shows "AutoNav Engineer", "Outreach Member" and so on.
+   - **Status** is Active, Alumni or Inactive. Empty means Active for new people and "no change" for existing ones.
+   - Web addresses can be written with or without `https://`. **Email** is never shown on the website.
+   - Executive titles and team leads are not set by the import. Add those on the team's **People** tab.
 3. Choose the **.csv** file (Google Sheets: File → Download → Comma-separated values), **or** copy the cells straight from the sheet, including the header row, and paste them into the box.
 4. Optional **headshots**: select all the photo files at once. A photo is matched when its file name contains the person's full name, e.g. `Jane Doe.jpg`. Photos collected with a Google Form file-upload question are named that way automatically.
 5. Check the preview. Each row says **New**, **Update** (already in the dashboard, matched by name) or what's wrong. Then click **Import**.
