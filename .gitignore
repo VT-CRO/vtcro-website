@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+.env*.local
+.env
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+.DS_Store
+backups
+seed/seed.ndjson
+
+# Kept on this computer only
+# original full-size photos (the site uses optimized copies in public/)
+assets/
+.claude/

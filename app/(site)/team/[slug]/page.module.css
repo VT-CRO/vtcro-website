@@ -1,0 +1,112 @@
+.page {
+  padding-top: calc(var(--header-h) + clamp(28px, 5vw, 56px));
+  background:
+    radial-gradient(50% 40% at 15% 0%, rgb(255 255 255 / 0.048), transparent 70%),
+    var(--bg);
+}
+.facts dt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.facts dt :global(.icon-badge) {
+  --size: 32px;
+  border-radius: 10px;
+}
+.teamLogo {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+.back {
+  color: var(--text-2);
+  margin-bottom: clamp(20px, 3vw, 36px);
+}
+.grid {
+  display: grid;
+  gap: 32px;
+  padding-bottom: var(--section-y);
+}
+.photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  box-shadow: var(--shadow-2), 0 30px 80px -40px rgb(0 0 0 / 0.45);
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: var(--surface-2);
+  max-width: 520px;
+}
+.info {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+}
+.name {
+  margin-top: -4px;
+}
+.role {
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--accent-text);
+}
+.facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--line-2);
+  margin-top: 8px;
+}
+.facts > div {
+  display: grid;
+  gap: 6px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.facts dd {
+  font-weight: 500;
+}
+.teams ul {
+  display: grid;
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.teams a {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.teamName {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+.teamRole {
+  color: var(--text-2);
+  font-size: 0.875rem;
+  text-align: right;
+}
+.teams a:hover .teamName {
+  color: var(--accent);
+}
+.bio {
+  max-width: 60ch;
+}
+@media (min-width: 1000px) {
+  .grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 72px;
+    align-items: start;
+  }
+  .photo {
+    max-width: none;
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+  }
+  .info {
+    padding-top: 12px;
+    max-width: 620px;
+  }
+}

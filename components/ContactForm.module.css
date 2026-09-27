@@ -1,0 +1,119 @@
+.form {
+  display: grid;
+  gap: 20px;
+}
+.row {
+  display: grid;
+  gap: 20px;
+}
+@media (min-width: 640px) {
+  .row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.field {
+  display: grid;
+  gap: 8px;
+}
+.field label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 16px;
+  font: inherit;
+  font-size: 16px; /* prevents iOS zoom */
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  transition:
+    border-color var(--dur-2) var(--ease),
+    background-color var(--dur-2) var(--ease);
+  appearance: none;
+}
+.field textarea {
+  resize: vertical;
+  min-height: 160px;
+  line-height: 1.6;
+}
+.field input:hover,
+.field textarea:hover,
+.field select:hover {
+  border-color: var(--line-3);
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface-3);
+  box-shadow: 0 0 0 3px rgb(255 255 255 / 0.054);
+}
+.selectWrap {
+  position: relative;
+}
+.selectWrap::after {
+  content: '';
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -6px;
+  border-right: 1.5px solid var(--text-2);
+  border-bottom: 1.5px solid var(--text-2);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.status:focus {
+  outline: none;
+}
+.error {
+  padding: 12px 14px;
+  border-left: 2px solid #f08a7e;
+  background: rgb(240 138 126 / 0.08);
+  color: #f5b3aa;
+  font-size: 0.9375rem;
+}
+.form button[type='submit'] {
+  justify-self: start;
+}
+.form button[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+}
+.sent {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  outline: none;
+}
+.check {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  margin-bottom: 8px;
+}

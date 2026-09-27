@@ -1,0 +1,51 @@
+.banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(96px, 14vw, 200px);
+  text-align: center;
+  background: #0a0a0b;
+}
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  filter: grayscale(1);
+}
+.wash {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: rgb(10 10 11 / 0.8);
+}
+.inner {
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+  max-width: 880px;
+  margin-inline: auto;
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 13px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.25) inset;
+}
+.msg {
+  max-width: 54ch;
+  color: rgb(255 255 255 / 0.75);
+}
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}

@@ -1,0 +1,66 @@
+.card {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  height: 100%;
+}
+.photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  background: var(--surface-2);
+  box-shadow: var(--shadow-1);
+  transition:
+    transform var(--dur-2) var(--ease-spring),
+    box-shadow var(--dur-2) var(--ease);
+}
+.photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px var(--line);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.text {
+  display: grid;
+  gap: 3px;
+}
+.name {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  transition: color var(--dur-2) var(--ease);
+}
+.role {
+  font-size: 0.8125rem;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+.meta {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.large .name {
+  font-size: 1.125rem;
+}
+@media (hover: hover) {
+  .card:hover .img {
+    transform: scale(1.04);
+  }
+  .card:hover .name {
+    color: var(--accent-text);
+  }
+  .card:hover .photo {
+    transform: translateY(-4px);
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.15),
+      0 24px 50px -24px rgb(0 0 0 / 0.45);
+  }
+}

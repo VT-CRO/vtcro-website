@@ -1,0 +1,32 @@
+.banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  min-height: clamp(420px, 70vh, 720px);
+  padding: var(--section-y) var(--gutter);
+  background: #0a0a0b;
+}
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgb(10 10 11 / 0.45);
+}
+.inner {
+  display: grid;
+  justify-items: center;
+  gap: clamp(28px, 4vw, 44px);
+}
+.logo {
+  width: min(72vw, 520px);
+  height: auto;
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.45)) drop-shadow(0 14px 36px rgb(0 0 0 / 0.5));
+}

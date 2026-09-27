@@ -1,0 +1,41 @@
+.grid {
+  display: grid;
+  gap: 40px;
+}
+.items {
+  display: grid;
+}
+.item {
+  display: grid;
+  gap: 16px;
+  padding-block: clamp(28px, 4vw, 44px);
+  border-top: 1px solid var(--line-2);
+}
+.item:last-child {
+  padding-bottom: 0;
+}
+.item dt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-3);
+}
+.item dd {
+  max-width: 30ch;
+  font-size: clamp(1.4rem, 1.05rem + 1.5vw, 2.3rem);
+}
+@media (min-width: 1000px) {
+  .grid {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: 64px;
+  }
+  .heading {
+    position: sticky;
+    top: calc(var(--header-h) + 40px);
+    align-self: start;
+  }
+  .item:first-child {
+    padding-top: 12px;
+    border-top: 0;
+  }
+}

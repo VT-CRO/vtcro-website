@@ -1,0 +1,26 @@
+.header {
+  display: grid;
+  gap: 20px;
+  margin-bottom: clamp(40px, 6vw, 72px);
+}
+.text {
+  display: grid;
+  gap: 16px;
+}
+.intro {
+  max-width: 56ch;
+}
+.center {
+  justify-items: center;
+  text-align: center;
+}
+.center .intro {
+  margin-inline: auto;
+}
+@media (min-width: 900px) {
+  .header:not(.center) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 48px;
+  }
+}

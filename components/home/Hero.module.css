@@ -1,0 +1,166 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  overflow: hidden;
+  padding-top: var(--header-h);
+  padding-bottom: clamp(32px, 5vh, 56px);
+}
+.media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.image {
+  filter: grayscale(1);
+  animation: settle 2.2s var(--ease) both;
+}
+@keyframes settle {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+.scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 60% at 50% 45%, rgb(10 10 11 / 0.55), rgb(10 10 11 / 0.8) 100%),
+    linear-gradient(to bottom, rgb(10 10 11 / 0.5), rgb(10 10 11 / 0.2) 40%, rgb(10 10 11 / 0.85) 88%, var(--bg));
+}
+
+.center {
+  flex: 1.25;
+  display: grid;
+  align-content: end;
+  justify-items: center;
+  gap: 24px;
+  text-align: center;
+  padding-top: clamp(32px, 6vh, 72px);
+}
+/* Buttons sit midway between the organization name and the sponsors. */
+.ctasWrap {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding-block: clamp(28px, 5vh, 56px);
+}
+.logoWrap {
+  width: min(84vw, 720px);
+  margin: 0;
+  animation: fade 1.2s var(--ease) 0.1s both;
+}
+.logo {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.5)) drop-shadow(0 14px 40px rgb(0 0 0 / 0.55));
+}
+.name {
+  font-family: var(--font-mono);
+  font-size: clamp(0.62rem, 0.58rem + 0.25vw, 0.76rem);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.72);
+  animation: fade 1.2s var(--ease) 0.4s both;
+}
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  animation: fade 1.2s var(--ease) 0.55s both;
+}
+.ctas :global(.btn--secondary) {
+  color: #fff;
+  border-color: rgb(255 255 255 / 0.4);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  background: rgb(255 255 255 / 0.04);
+}
+.ctas :global(.btn--secondary:hover) {
+  border-color: #fff;
+}
+.ctas :global(.btn--light) {
+  background: #fff;
+  color: #0a0a0b;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Sponsors: two quiet columns of logos */
+.sponsors {
+  animation: fade 1.2s var(--ease) 0.7s both;
+}
+.columns {
+  display: grid;
+  gap: 32px;
+}
+.column {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+}
+.columnLabel {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.55);
+}
+.logos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.logoLink {
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.78;
+  transition: opacity var(--dur-2) var(--ease);
+}
+a.logoLink:hover {
+  opacity: 1;
+}
+.logoImg {
+  height: 28px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+}
+.mono {
+  filter: brightness(0) invert(1);
+}
+.logoText {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgb(255 255 255 / 0.7);
+}
+@media (min-width: 900px) {
+  .columns[data-count='2'] {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  .columns[data-count='2'] .column + .column {
+    border-left: 1px solid rgb(255 255 255 / 0.14);
+  }
+  .logoImg {
+    height: 32px;
+  }
+}

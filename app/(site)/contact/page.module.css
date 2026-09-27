@@ -1,0 +1,95 @@
+.grid {
+  display: grid;
+  gap: 48px;
+}
+.aside {
+  display: grid;
+  gap: 36px;
+  align-content: start;
+}
+.block {
+  display: grid;
+  gap: 14px;
+}
+.blockTitle {
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.routes,
+.socials {
+  display: grid;
+  gap: 10px;
+}
+.socials {
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}
+.route,
+.social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px 14px 14px;
+  transition:
+    transform var(--dur-2) var(--ease-spring),
+    box-shadow var(--dur-2) var(--ease);
+}
+.route :global(.icon-badge),
+.social :global(.icon-badge) {
+  --size: 42px;
+}
+.route > span:last-child {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.routeLabel {
+  font-size: 0.8125rem;
+  color: var(--text-3);
+}
+.routeEmail {
+  font-weight: 600;
+  word-break: break-all;
+}
+.social {
+  font-weight: 600;
+}
+.social > span:nth-child(2) {
+  flex: 1;
+}
+.ext {
+  color: var(--text-3);
+}
+@media (hover: hover) {
+  .route:hover,
+  .social:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.135) inset,
+      0 20px 44px -22px rgb(0 0 0 / 0.45);
+  }
+}
+.location {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.formCol {
+  display: grid;
+  gap: 24px;
+  align-content: start;
+  padding: clamp(24px, 4vw, 44px);
+}
+@media (min-width: 1000px) {
+  .grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 64px;
+  }
+}
+.backdrop {
+  min-height: 100svh;
+}
+.backdrop::before {
+  background:
+    linear-gradient(to bottom, rgb(10 10 11 / 0.72), rgb(10 10 11 / 0.8) 60%, rgb(10 10 11 / 0.92)) !important;
+}

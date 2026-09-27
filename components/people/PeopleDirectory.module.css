@@ -1,0 +1,19 @@
+/* Generous space between Executive, Engineering and Support. */
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(120px, 15vw, 208px);
+}
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(56px, 7vw, 88px);
+}
+.titleRow {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.title {
+  text-align: center;
+}

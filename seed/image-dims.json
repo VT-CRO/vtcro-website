@@ -1,0 +1,266 @@
+{
+ "/seed/team-autonav-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-autonav-cover.webp": {
+  "w": 876,
+  "h": 701
+ },
+ "/seed/team-canopy-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-canopy-cover.webp": {
+  "w": 1534,
+  "h": 865
+ },
+ "/seed/team-crolabs-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-crolabs-cover.webp": {
+  "w": 800,
+  "h": 593
+ },
+ "/seed/team-crodart-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-crodart-cover.webp": {
+  "w": 1297,
+  "h": 696
+ },
+ "/seed/team-croquest-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-croquest-cover.webp": {
+  "w": 1122,
+  "h": 867
+ },
+ "/seed/team-southeastcon-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-southeastcon-cover.webp": {
+  "w": 1999,
+  "h": 1333
+ },
+ "/seed/team-vexu-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-vexu-cover.webp": {
+  "w": 993,
+  "h": 563
+ },
+ "/seed/team-business-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-executive-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-executive-cover.webp": {
+  "w": 2000,
+  "h": 1326
+ },
+ "/seed/team-learning-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-learning-cover.webp": {
+  "w": 1728,
+  "h": 1296
+ },
+ "/seed/team-operations-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-operations-cover.webp": {
+  "w": 1616,
+  "h": 1212
+ },
+ "/seed/team-outreach-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/team-outreach-cover.webp": {
+  "w": 1568,
+  "h": 1040
+ },
+ "/seed/project-workcell-logo.webp": {
+  "w": 512,
+  "h": 512
+ },
+ "/seed/project-workcell-video.webp": {
+  "w": 1280,
+  "h": 720
+ },
+ "/seed/comp-igvc-logo.webp": {
+  "w": 256,
+  "h": 256
+ },
+ "/seed/hero-pcb.webp": {
+  "w": 1992,
+  "h": 1328
+ },
+ "/seed/photo-atrium-competition.webp": {
+  "w": 2000,
+  "h": 1500
+ },
+ "/seed/photo-team-group.webp": {
+  "w": 2000,
+  "h": 1500
+ },
+ "/seed/photo-awards-group.webp": {
+  "w": 2000,
+  "h": 1333
+ },
+ "/seed/photo-workbench.webp": {
+  "w": 2000,
+  "h": 1090
+ },
+ "/seed/photo-pcb-boards.webp": {
+  "w": 2000,
+  "h": 1333
+ },
+ "/seed/photo-floor-plan.webp": {
+  "w": 2000,
+  "h": 1500
+ },
+ "/seed/photo-lab.webp": {
+  "w": 1504,
+  "h": 997
+ },
+ "/seed/photo-classroom-panorama.webp": {
+  "w": 2000,
+  "h": 724
+ },
+ "/seed/photo-lab-build-night.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/seed/photo-lab-work.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/seed/photo-pcb-purple.webp": {
+  "w": 2000,
+  "h": 1354
+ },
+ "/seed/photo-lab-team.webp": {
+  "w": 2400,
+  "h": 1567
+ },
+ "/seed/photo-lab-group.webp": {
+  "w": 2000,
+  "h": 2000
+ },
+ "/seed/photo-lab-soldering.webp": {
+  "w": 1801,
+  "h": 1351
+ },
+ "/seed/photo-whiteboard.webp": {
+  "w": 1294,
+  "h": 971
+ },
+ "/seed/photo-whiteboard-2.webp": {
+  "w": 1799,
+  "h": 1349
+ },
+ "/seed/photo-operations-stage.webp": {
+  "w": 2000,
+  "h": 1333
+ },
+ "/seed/photo-outreach-kids.webp": {
+  "w": 2000,
+  "h": 1341
+ },
+ "/seed/photo-southeastcon-team.webp": {
+  "w": 2000,
+  "h": 1500
+ },
+ "/seed/photo-senior-team.webp": {
+  "w": 2187,
+  "h": 1458
+ },
+ "/seed/photo-vexu-robot.webp": {
+  "w": 1750,
+  "h": 1227
+ },
+ "/seed/photo-workcell.webp": {
+  "w": 1536,
+  "h": 858
+ },
+ "/seed/photo-competition-team.webp": {
+  "w": 1080,
+  "h": 810
+ },
+ "/seed/photo-competition-team-wide.webp": {
+  "w": 1080,
+  "h": 572
+ },
+ "/seed/photo-vt-campus.webp": {
+  "w": 2027,
+  "h": 1344
+ },
+ "/seed/photo-new-design-team.webp": {
+  "w": 2000,
+  "h": 1334
+ },
+ "/seed/bg-footer-bird.webp": {
+  "w": 2243,
+  "h": 967
+ },
+ "/seed/sponsor-vt-ece.webp": {
+  "w": 900,
+  "h": 133
+ },
+ "/seed/sponsor-vt-me.webp": {
+  "w": 900,
+  "h": 137
+ },
+ "/seed/sponsor-vt-ise.webp": {
+  "w": 900,
+  "h": 138
+ },
+ "/icons/reliability.svg": {
+  "w": 100,
+  "h": 100
+ },
+ "/icons/simplicity.svg": {
+  "w": 100,
+  "h": 100
+ },
+ "/icons/modularity.svg": {
+  "w": 100,
+  "h": 100
+ },
+ "/icons/award.svg": {
+  "w": 100,
+  "h": 100
+ },
+ "/icons/engineering.svg": {
+  "w": 100,
+  "h": 100
+ },
+ "/icons/idea.svg": {
+  "w": 100,
+  "h": 100
+ },
+ "/icons/business.svg": {
+  "w": 100,
+  "h": 100
+ },
+ "/seed/photo-lab-room.webp": {
+  "w": 1504,
+  "h": 997
+ },
+ "/seed/photo-splash-pcb.webp": {
+  "w": 1992,
+  "h": 1328
+ }
+}

@@ -1,0 +1,24 @@
+.grid {
+  --cols: 1;
+  --gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: calc(var(--gap) * 1.4) var(--gap);
+}
+.grid > li {
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  min-width: 0;
+}
+@media (min-width: 600px) {
+  .grid {
+    --cols: 2;
+    --gap: 24px;
+  }
+}
+@media (min-width: 1000px) {
+  .grid {
+    --cols: 3;
+    --gap: 32px;
+  }
+}
