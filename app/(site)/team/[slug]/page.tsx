@@ -9,6 +9,7 @@ import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { getMember, getMembers, getTeam } from '@/lib/content'
 import styles from './page.module.css'
+import { DEFAULT_SHARE_IMAGE } from '@/lib/format'
 
 export const revalidate = 3600
 
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     alternates: { canonical: `/team/${member.slug}` },
     // Sample profiles shouldn't be indexed.
     robots: member.isPlaceholder ? { index: false } : undefined,
-    openGraph: member.photo ? { images: [{ url: member.photo.src, alt: member.photo.alt }] } : undefined,
+    openGraph: { images: member.photo ? [{ url: member.photo.src, alt: member.photo.alt }] : [DEFAULT_SHARE_IMAGE] },
   }
 }
 

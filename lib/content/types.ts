@@ -79,7 +79,6 @@ export type TeamSummary = {
   logo: Img | null
   cover: Img | null
   shortDescription: string
-  department: string
   competitionName: string
 }
 

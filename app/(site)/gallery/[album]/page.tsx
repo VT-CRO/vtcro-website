@@ -6,6 +6,7 @@ import { PhotoGrid } from '@/components/photos/PhotoGrid'
 import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { getAlbum, getAlbums } from '@/lib/content'
+import { DEFAULT_SHARE_IMAGE } from '@/lib/format'
 
 export const revalidate = 3600
 
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ album: st
     title: album.title,
     description: album.description || `Photos from VT CRO.`,
     alternates: { canonical: `/gallery/${album.slug}` },
-    openGraph: album.cover ? { images: [{ url: album.cover.src, alt: album.cover.alt }] } : undefined,
+    openGraph: { images: album.cover ? [{ url: album.cover.src, alt: album.cover.alt }] : [DEFAULT_SHARE_IMAGE] },
   }
 }
 

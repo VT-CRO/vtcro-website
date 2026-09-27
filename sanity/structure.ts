@@ -9,6 +9,7 @@ import {
   RocketIcon,
   StarIcon,
   UserIcon,
+  UploadIcon,
   UsersIcon,
   WarningOutlineIcon,
 } from './icons'
@@ -16,6 +17,8 @@ import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 import type { ConfigContext } from 'sanity'
 import type { DefaultDocumentNodeResolver, StructureBuilder } from 'sanity/structure'
 import { AppearsOn } from './components/AppearsOn'
+import { MemberImport } from './components/MemberImport'
+import { TeamMembers } from './components/TeamMembers'
 
 const singleton = (S: StructureBuilder, id: string, title: string, icon: any) =>
   S.listItem()
@@ -81,6 +84,12 @@ export const structure = (S: StructureBuilder, context: ConfigContext) =>
                 .child(S.documentTypeList('member').title('Inactive').filter('_type == "member" && status == "inactive"')),
               S.divider(),
               S.documentTypeListItem('member').title('Everyone'),
+              S.divider(),
+              S.listItem()
+                .title('Import from a spreadsheet')
+                .id('member-import')
+                .icon(UploadIcon)
+                .child(S.component(MemberImport).id('member-import').title('Import members from a spreadsheet')),
             ]),
         ),
 
@@ -153,6 +162,9 @@ export const structure = (S: StructureBuilder, context: ConfigContext) =>
 export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, { schemaType }) => {
   if (schemaType === 'member') {
     return S.document().views([S.view.form(), S.view.component(AppearsOn).title('Appears on')])
+  }
+  if (schemaType === 'team') {
+    return S.document().views([S.view.form(), S.view.component(TeamMembers).title('Members')])
   }
   return S.document().views([S.view.form()])
 }

@@ -1,12 +1,13 @@
 # VT CRO Website: Manager's Guide
 
-You can keep the entire website up to date without touching code. Everything is edited in the **dashboard** at **vtcro.org/studio**. Log in with the account you were invited with.
+You can keep the entire website up to date without touching code. Everything is edited in the **dashboard** at **vtcro.org/studio** (log in with the VT CRO account).
 
 **The golden rules**
 - **Edit once, it updates everywhere.** A person's headshot, a team's logo and a contact email each live in exactly one place.
 - **Nothing goes live until you click _Publish_** (bottom right). The live site updates within seconds.
 - **Every change can be undone.** Open a document, click the clock icon (top right) to see its history, and restore any earlier version.
 - **Always fill in "Alt text"** on images. It describes the photo for visitors using screen readers.
+- **Empty is fine.** Anything with no content yet (members, events, photos) shows "Coming soon" on the site and fills in by itself once you publish.
 
 ---
 
@@ -14,138 +15,123 @@ You can keep the entire website up to date without touching code. Everything is 
 
 | Section | What it controls |
 |---|---|
-| **Homepage** | Headline, top photo/video, About text, Core Principles, order of homepage sections |
+| **Homepage** | Top photo, the line under the logo, About text, Core Principles, order of homepage sections |
 | **Teams** | Design Teams and Support Teams: every team page is generated from here |
-| **Members** | One entry per person: headshot, major, graduation year, links |
+| **Members** | One entry per person: headshot, major, graduation year, teams, links. Also **Import from a spreadsheet** |
 | **Events** | Events move from "Upcoming" to "Past" by themselves |
 | **Gallery (albums)** | Photo albums for the gallery |
 | **Awards** | Awards shown on the homepage and on team pages |
 | **Projects** | Featured projects (e.g. WorkCell) |
-| **Sponsors** | Sponsors, sponsor categories and tiers, and the Sponsors page text |
-| **Recruitment / Apply** | The applications open/closed switch, dates, FAQ, timeline |
+| **Sponsors** | Sponsors, sponsor categories and tiers, and the **Sponsors page text** (see below) |
+| **Recruitment / Apply** | The applications open/closed switch, application period, messages, recruitment steps |
 | **Contact & social links** | Emails, contact-form routing, GitHub, Instagram, LinkedIn, YouTube, Discord |
 | **Site settings** | Organization name, footer text, link-preview image |
-| **Placeholder content to replace** | Everything created as sample content during the build: work through this list |
 
 ---
 
-## Common tasks
+## People
+
+### How the Team page is organized
+The Team page (vtcro.org/team) has three groups, filled in automatically:
+
+| Group | Who appears there | Where you set it |
+|---|---|---|
+| **Executive Team** | People in the **Executive** team's *Team leadership* list, with their titles, in the order you drag them | Teams → Support Teams → Executive → **People** tab |
+| **Engineering Team** | Everyone on at least one **design team** (Canopy, VexU, AutoNav…) | The person's own form → **Teams** |
+| **Support Team** | Everyone on only **support teams** (Operations, Outreach…) | The person's own form → **Teams** |
+
+Each person appears once. An executive board member who is also on a design team shows under Executive Team.
+
+### Add one person
+1. **Members → Active members → +**.
+2. Fill in **Full name** and click **Generate** next to the profile address. Everything else is optional: headshot, major, graduation year, LinkedIn, personal website, GitHub.
+3. Under **Teams**, click **Add item** and pick each team they're on. The role is optional (e.g. *Software Lead*); if left empty the site shows "AutoNav Engineer" or "Outreach Member".
+4. **Publish.**
+
+### Team leads and the executive board
+Open the team → **People** tab → **Team leadership** → add the person and their title (e.g. *President*, *Chief Engineer*). Drag to set the order. Leaders are shown first on the team page. For the Executive team, this list is the Executive Team on the Team page.
+
+To see everyone on a team, open the team and click its **Members** tab (top of the form). To see every team a person is on, open the person and click **Appears on**.
+
+### Add many people at once (spreadsheet import)
+**Members → Import from a spreadsheet.**
+
+1. Click **Download a blank template**, or use your own Google Sheet, Excel file or Google Form responses. Only a **Name** column is required. Other recognized columns are *Teams, Role, Major, Graduation year, LinkedIn, Website, GitHub, Email, Status*. Column headers can be worded freely, so Google Form questions work as they are.
+2. **Teams**: team names or codes separated by commas, e.g. `AutoNav, Outreach` or `NAV; VEX`.
+3. Choose the **.csv** file (Google Sheets: File → Download → Comma-separated values), **or** copy the cells straight from the sheet, including the header row, and paste them into the box.
+4. Optional **headshots**: select all the photo files at once. A photo is matched when its file name contains the person's full name, e.g. `Jane Doe.jpg`. Photos collected with a Google Form file-upload question are named that way automatically.
+5. Check the preview. Each row says **New**, **Update** (already in the dashboard, matched by name) or what's wrong. Then click **Import**.
+
+Imported people go live straight away. Re-importing is safe: nothing is deleted, empty cells never erase existing details, and teams are added, not replaced.
+
+**Recommended yearly routine:** send new members a Google Form (name, teams, major, graduation year, optional links, headshot upload). Then open the responses in Sheets, download them as CSV, download the headshot folder from Google Drive, and import everything in one go.
+
+### Someone graduates
+Open the member and set **Status → Alumni**, then Publish. They disappear from every team and the Team page, but their record is kept. (Don't delete people; changing their status is enough.) You can also mark many people Alumni at once by importing a sheet with *Name* and *Status* columns.
+
+---
+
+## Other common tasks
 
 ### Add a new team
-1. **Teams → Design Teams** (or Support Teams) → **+** (top of the list).
+1. **Teams → Design Teams** (or Support Teams) → **+**.
 2. Fill in **Team name** and click **Generate** next to Web address.
 3. Choose **Design Team** or **Support Team**, and write the **Short description**.
 4. Upload the **Team logo** and **Cover photo**. Drag the crop circle onto the important part of the photo.
-5. Fill in the other tabs as needed (About & project, People, Links…). **Empty fields simply don't show on the site.**
-6. **Publish.**
-
-The team now appears on the homepage, on /teams, in the footer and in the mobile menu, and gets its own page at vtcro.org/teams/your-slug. **Drag teams in the list to change their order everywhere.**
-
-### Add people / put them on teams
-1. **Members → +** : name, **Generate** profile address, headshot, major, graduation year, links → **Publish**.
-2. Open the **team** → **People** tab:
-   - **Team leadership**: add the person and a title (e.g. *Chief Engineer*).
-   - **Team members**: add the person (role is optional).
-3. **Publish** the team.
-
-A person on two teams is **one** Member entry added to both teams. Open a member and click the **"Appears on"** tab to see every team they're on.
-
-### Someone graduates
-Open the member and set **Status → Alumni**, then Publish. They disappear from every team and the Team page, but their record is kept. (Don't delete people; changing their status is enough.)
-
-### New school year (lots of changes)
-1. Mark graduates **Alumni**.
-2. Create the new members.
-3. Update each team's **People** tab.
-
-The member counts on the homepage update themselves.
-
-### Executive board / Leadership
-The **Executive** team (Teams → Support Teams) has **List as "Leadership" on the Team page** turned on. The people in its *Team leadership* list appear first on the Team page, under "Leadership", with their titles (President, VP…).
-
-### Icons
-Anywhere you see an **Icon** dropdown (About lists, recruitment steps, sponsor reasons, other ways to get involved), pick from the built-in set: trophy, users, rocket, book, and so on.
+5. Fill in the other tabs as needed. **Empty fields simply don't show on the site.**
+6. **Publish.** Drag teams in the list to change their order everywhere.
 
 ### Open or close applications
-**Recruitment / Apply** → flip **Applications open?**, paste the **Application form link**, check the dates, then **Publish**.
-
-The Apply page, the Apply button in the menu, and the banner at the bottom of the homepage all switch automatically.
+**Recruitment / Apply**:
+- **To open:** switch **Applications open?** on, paste the **Application form link**, set **Applications open on / close on**, then **Publish**. The Apply page shows the application period and an Apply button.
+- **To close:** switch it off and **Publish**. The Apply page shows the closed message, and no dates appear.
 
 ### Add an event
-**Events → Upcoming → +** : name, **Generate** address, start and end date/time, location, image, description → Publish.
-
+**Events → Upcoming → +**: name, **Generate** address, start and end date/time, location, image, description → Publish.
 - Turn on **Featured** to show it large on the Events page.
 - After it ends, it moves to **Past events** on its own.
 
 ### Upload photos
-1. **Gallery (albums) → +** : album title, **Generate** address, date.
+1. **Gallery (albums) → +**: album title, **Generate** address, date.
 2. Drag many photos into **Photos** at once. You don't need to resize them.
-3. Optionally tag the album's **Teams** and **Event**, so the photos also appear on those team and event pages.
-4. Click a photo to add a caption, the photographer's name, or **Feature on homepage**.
+3. Optionally tag the album's **Event**, so the photos also appear on that event page.
+4. Click a photo to add a caption, the photographer's name, or **Feature** it first in the gallery.
 5. Publish.
 
 ### Add an award
-**Awards → +** : award name, placement (e.g. *1st*), podium finish (for styling), competition, year, location, **Team** → Publish.
-
-- It appears in the homepage record and on that team's page.
-- Drag to reorder awards within the same year.
+**Awards → +**: award name, placement (e.g. *1st*), competition, year, location, **Team** → Publish. It appears on the homepage and on that team's page.
 
 ### Add or hide a sponsor
-**Sponsors → Sponsors → +** : name, logo, category (and optional tier), website → Publish.
-
-- Upload a **white logo** in *Logo for dark backgrounds* if you have one. Otherwise the logo is shown on a light tile.
+**Sponsors → Sponsors → +**: name, logo, **Category** (Corporate or Department Supporters), website → Publish.
+- Logos are shown in their own colors. Use a PNG with a transparent background.
+- Only if a logo is dark (e.g. black text) and would disappear on the dark website, also upload a white version in *White logo for dark backgrounds*. It is then used instead.
 - To hide a sponsor temporarily, switch off **Show on website**.
-- New categories (e.g. *Corporate Sponsors*) go in **Sponsor categories**.
+- Drag sponsors in the list to change their order.
+
+### Sponsors page text
+**Sponsors → Sponsors page text** holds the words on vtcro.org/sponsors (the logos come from the Sponsors list):
+
+| Field | Where it appears |
+|---|---|
+| **Page heading** | The large title at the top ("Partner with VT CRO") |
+| **Intro** | A short paragraph under the heading (currently empty, so nothing shows) |
+| **Why sponsor VT CRO** | Optional cards with an icon, title and sentence, e.g. what sponsors get |
+| **Sponsorship packet (PDF)** | Upload a PDF. The "Sponsorship packet · coming soon" button becomes a download |
+| **Contact heading / text** | The "Start a conversation" section at the bottom, above the email button |
 
 ### Change the homepage
-**Homepage** opens with the big VT CRO logo over the **Background photo** (Top of page tab), with sponsor logos underneath, one column per sponsor category. Sponsors are managed under **Sponsors**.
-
-- **About & principles**: the About section has three short parts: *Our mission*, *What we are* and *What we believe in*. Core principles have a name, a short statement and an icon. Drag to reorder.
-- **Section order & headings**: drag sections to reorder them or switch any off, and choose a **Light** or **Dark** background for each. A background photo is optional and covers the whole section under a soft overlay.
+- **Top of page:** the background photo and the line under the logo. Sponsor logos show under the buttons, one column per sponsor category.
+- **About & principles:** *Our mission*, *What we are*, *What we believe in*, and the Core Principles (name, short statement, icon).
+- **Section order & headings:** drag sections to reorder them or switch any off, and choose a **Light** or **Dark** background for each.
 
 ### Icons
-Anywhere you see an **Icon** dropdown (About lists, recruitment steps, sponsor reasons, other ways to get involved), pick from the built-in set: trophy, users, rocket, book, and so on.
-
-### Open or close applications
-**Recruitment / Apply** → flip **Applications open?**, paste the **Application form link**, check the dates, then **Publish**.
-
-The Apply page, the Apply button in the menu, and the banner at the bottom of the homepage all switch automatically.
-
-### Add an event
-**Events → Upcoming → +** : name, **Generate** address, start and end date/time, location, image, description → Publish.
-
-- Turn on **Featured** to show it large on the Events page.
-- After it ends, it moves to **Past events** on its own.
-
-### Upload photos
-1. **Gallery (albums) → +** : album title, **Generate** address, date.
-2. Drag many photos into **Photos** at once. You don't need to resize them.
-3. Optionally tag the album's **Teams** and **Event**, so the photos also appear on those team and event pages.
-4. Click a photo to add a caption, the photographer's name, or **Feature on homepage**.
-5. Publish.
-
-### Add an award
-**Awards → +** : award name, placement (e.g. *1st*), podium finish (for styling), competition, year, location, **Team** → Publish.
-
-- It appears in the homepage record and on that team's page.
-- Drag to reorder awards within the same year.
-
-### Add or hide a sponsor
-**Sponsors → Sponsors → +** : name, logo, category (and optional tier), website → Publish.
-
-- Upload a **white logo** in *Logo for dark backgrounds* if you have one. Otherwise the logo is shown on a light tile.
-- To hide a sponsor temporarily, switch off **Show on website**.
-- New categories (e.g. *Corporate Sponsors*) go in **Sponsor categories**.
-
-### Change the homepage
-**Homepage** opens with the big VT CRO logo over the **Background photo** (Top of page tab). Every design and support team is listed under it automatically.
-
-- **About & principles** holds the About section: mission, intro, the *Purpose* and *How we're organized* lists, the *Member progression* steps and the photo collage. It was written from the VT CRO Constitution. Each list item has an **Icon** dropdown.
-- **Core principles**: name, short statement, description and an icon image. Drag to reorder.
-- **Section order & headings**: drag sections to reorder them, or switch any section off. For each section you can pick a **Light** or **Dark** background. You can also add a **Background photo**, which shows behind the section with a translucent strip over it.
+Anywhere you see an **Icon** dropdown (About, recruitment steps, sponsor reasons, other ways to get involved), pick from the built-in set: trophy, users, rocket, book, and so on.
 
 ### Change an email or social link
-**Contact & social links**. This is the only place they're stored. **Contact form topics** controls where each kind of message is emailed.
+**Contact & social links** is the only place they're stored. **Contact form topics** controls where each kind of message is emailed.
+
+### Link previews
+When someone shares a vtcro.org link (iMessage, Discord, LinkedIn…), the preview shows the VT CRO logo. Team, event, album and member pages use their own photo when they have one. To use a different site-wide image, upload it in **Site settings → Default link-preview image**.
 
 ---
 
@@ -154,10 +140,3 @@ The Apply page, the Apply button in the menu, and the banner at the bottom of th
 - Use the **crop/hotspot tool** (click the image, then the crop icon) to keep faces and robots in frame on every screen size.
 - **Headshots**: a similar style for everyone looks best (same background, shoulders-up).
 - **Team logos**: square PNG with a transparent background, or SVG.
-- Anything without an image yet shows a labeled **Placeholder** frame, so nothing ever looks broken.
-
-## Placeholder content
-Everything created as sample content during the build is listed under **Placeholder content to replace**.
-
-- Replace the details and switch off **Sample / placeholder content**, or delete the entry.
-- Text placeholders start with **[Placeholder]**.

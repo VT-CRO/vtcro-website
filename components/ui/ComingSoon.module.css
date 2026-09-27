@@ -1,0 +1,21 @@
+.wrap {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 14px;
+  padding-block: clamp(40px, 8vw, 96px);
+  text-align: center;
+}
+.page {
+  min-height: calc(62svh - var(--header-h));
+}
+.label {
+  margin: 0;
+}
+.title {
+  font-size: clamp(2rem, 1.4rem + 3vw, 3.4rem);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  color: var(--text-2);
+}

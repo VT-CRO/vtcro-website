@@ -114,6 +114,7 @@
   display: grid;
   gap: 18px;
   justify-items: center;
+  align-content: start;
 }
 .columnLabel {
   font-family: var(--font-mono);
@@ -131,7 +132,7 @@
 .logoLink {
   display: inline-flex;
   align-items: center;
-  opacity: 0.78;
+  opacity: 0.92;
   transition: opacity var(--dur-2) var(--ease);
 }
 a.logoLink:hover {
@@ -142,9 +143,6 @@ a.logoLink:hover {
   width: auto;
   max-width: 220px;
   object-fit: contain;
-}
-.mono {
-  filter: brightness(0) invert(1);
 }
 .logoText {
   font-size: 0.875rem;

@@ -110,7 +110,6 @@ function teamSummary(d: RawDoc): TeamSummary {
     logo: toImg(d.logo, `${str(d.name)} logo`),
     cover: toImg(d.coverImage, str(d.name)),
     shortDescription: str(d.shortDescription),
-    department: str(d.department),
     competitionName: str(d.competition?.name),
   }
 }
@@ -150,7 +149,7 @@ function defaultRole(team: TeamSummary) {
   return team.type === 'design' ? `${team.name} Engineer` : `${team.name} Member`
 }
 
-/** Leaders + members of a team, resolved to active member records (no duplicates). */
+/** Leaders (ordered on the team) + members (who list the team on their own form), active only, no duplicates. */
 function teamPeople(ix: Index, d: RawDoc): { leadership: TeamPerson[]; roster: TeamPerson[] } {
   const team = teamSummary(d)
   const seen = new Set<string>()
@@ -161,13 +160,15 @@ function teamPeople(ix: Index, d: RawDoc): { leadership: TeamPerson[]; roster: T
     seen.add(m._id)
     leadership.push({ member: memberSummary(m), role: str(l.title) || defaultRole(team), isLeader: true, team })
   }
+  // Everyone else picks their teams on their own Member form.
   const roster: TeamPerson[] = []
-  for (const r of list<any>(d.roster)) {
-    const m = ix.one(r.member?._ref)
-    if (!isActiveMember(m) || seen.has(m._id)) continue
+  for (const m of ix.ofType('member')) {
+    const entry = list<any>(m.teams).find((t) => t.team?._ref === d._id)
+    if (!entry || !isActiveMember(m) || seen.has(m._id)) continue
     seen.add(m._id)
-    roster.push({ member: memberSummary(m), role: str(r.role) || defaultRole(team), isLeader: false, team })
+    roster.push({ member: memberSummary(m), role: str(entry.role) || defaultRole(team), isLeader: false, team })
   }
+  roster.sort((a, b) => a.member.name.localeCompare(b.member.name))
   return { leadership, roster }
 }
 

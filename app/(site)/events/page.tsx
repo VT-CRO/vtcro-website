@@ -7,6 +7,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { getEvents, getSite } from '@/lib/content'
 import { formatDate } from '@/lib/format'
 import styles from './page.module.css'
+import { ComingSoon } from '@/components/ui/ComingSoon'
 
 // Events move from Upcoming to Past on their own; refresh at least hourly.
 export const revalidate = 3600
@@ -22,6 +23,14 @@ export default async function EventsPage() {
   const featured = upcoming.find((e) => e.featured) ?? upcoming[0]
   const rest = upcoming.filter((e) => e !== featured)
   const years = [...new Set(past.map((e) => formatDate(e.start, { year: 'numeric' })))]
+
+  if (!upcoming.length && !past.length) {
+    return (
+      <Section first>
+        <ComingSoon label="Events" as="h1" page />
+      </Section>
+    )
+  }
 
   return (
     <>

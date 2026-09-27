@@ -54,18 +54,22 @@ export default async function ApplyPage() {
                 </a>
               )}
             </div>
-            <ul className={styles.meta}>
-              {r.cycleLabel && (
-                <li>
-                  <UsersIcon size={18} />
-                  <span>{r.cycleLabel}</span>
-                </li>
-              )}
-              <li>
-                <CalendarIcon size={18} />
-                <span>{period ?? 'Application period to be announced'}</span>
-              </li>
-            </ul>
+            {r.open && (r.cycleLabel || period) && (
+              <ul className={styles.meta}>
+                {r.cycleLabel && (
+                  <li>
+                    <UsersIcon size={18} />
+                    <span>{r.cycleLabel}</span>
+                  </li>
+                )}
+                {period && (
+                  <li>
+                    <CalendarIcon size={18} />
+                    <span>{period}</span>
+                  </li>
+                )}
+              </ul>
+            )}
           </div>
         </div>
       </section>

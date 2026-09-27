@@ -1,6 +1,7 @@
 import type { PeopleDirectory as Directory } from '@/lib/content'
 import { PeopleGrid } from './PeopleGrid'
 import styles from './PeopleDirectory.module.css'
+import { ComingSoon } from '@/components/ui/ComingSoon'
 
 /** Team page: Executive Team, Engineering Team, Support Team. Everyone is always shown. */
 export function PeopleDirectory({ directory }: { directory: Directory }) {
@@ -10,7 +11,7 @@ export function PeopleDirectory({ directory }: { directory: Directory }) {
     { id: 'support', title: 'Support Team', people: directory.support, large: false },
   ].filter((g) => g.people.length)
 
-  if (!groups.length) return <p className="t-lead">Member profiles will appear here once they are added in the CMS.</p>
+  if (!groups.length) return <ComingSoon label="Members" page />
 
   return (
     <div className={styles.groups}>

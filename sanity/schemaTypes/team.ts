@@ -95,13 +95,6 @@ export const team = defineType({
       description: 'A short list of goals for this season. Drag to reorder.',
     }),
     defineField({
-      name: 'department',
-      title: 'Department affiliation',
-      type: 'string',
-      group: 'about',
-      description: 'e.g. ECE Department. Leave empty if none.',
-    }),
-    defineField({
       name: 'competition',
       title: 'Competition',
       type: 'object',
@@ -156,7 +149,8 @@ export const team = defineType({
       title: 'Team leadership',
       type: 'array',
       group: 'people',
-      description: 'Pick people from Members and give each a title (e.g. Chief Engineer). Shown first on the team page.',
+      description:
+        'Team leads (or, for the Executive team, the executive board) with their title, e.g. President or Chief Engineer. Drag to set the order. Everyone else joins the team from their own Member form (Members → the person → Teams).',
       of: [
         defineArrayMember({
           type: 'object',
@@ -171,33 +165,6 @@ export const team = defineType({
         }),
       ],
     }),
-    defineField({
-      name: 'roster',
-      title: 'Team members',
-      type: 'array',
-      group: 'people',
-      description:
-        'Pick people from Members. A person can be on several teams; their photo and details are edited once, in Members. People marked Alumni or Inactive are hidden automatically.',
-      of: [
-        defineArrayMember({
-          type: 'object',
-          name: 'rosterEntry',
-          fields: [
-            defineField({ name: 'member', title: 'Person', type: 'reference', to: [{ type: 'member' }], validation: (r) => r.required() }),
-            defineField({
-              name: 'role',
-              title: 'Role on this team (optional)',
-              type: 'string',
-              description: 'e.g. Software Lead. Leave empty to show "<Team> Engineer" / "<Team> Member".',
-            }),
-          ],
-          preview: {
-            select: { title: 'member.name', subtitle: 'role', media: 'member.photo' },
-          },
-        }),
-      ],
-    }),
-
     defineField({ name: 'videoUrl', title: 'Video (YouTube link)', type: 'url', group: 'media', validation: urlValidation }),
 
     defineField({

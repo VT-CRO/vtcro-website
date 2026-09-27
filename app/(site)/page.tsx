@@ -13,6 +13,7 @@ import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { getAwards, getEvents, getHome, getProjects, getRecruitment, getSite, getSponsorGroups, getTeams, type HomeSection } from '@/lib/content'
 import { siteUrl } from '@/lib/format'
+import { ComingSoon } from '@/components/ui/ComingSoon'
 
 export const revalidate = 3600
 
@@ -81,7 +82,15 @@ export default async function HomePage() {
 
       case 'events': {
         const next = events.upcoming.slice(0, 3)
-        if (!next.length) return null
+        // Nothing in the CMS yet: "Coming soon". Past events only: hide the section until the next one.
+        if (!next.length && events.all.length) return null
+        if (!next.length) {
+          return (
+            <Section key={s.key} id="events" tone={s.tone} background={s.background} labelledBy="events-heading">
+              <ComingSoon label={s.heading || 'Upcoming Events'} as="h2" id="events-heading" />
+            </Section>
+          )
+        }
         return (
           <Section key={s.key} id="events" tone={s.tone} background={s.background} labelledBy="events-heading">
             <SectionHeader

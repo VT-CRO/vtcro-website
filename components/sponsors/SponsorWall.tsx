@@ -2,7 +2,7 @@ import Image from 'next/image'
 import type { SponsorGroup } from '@/lib/content'
 import styles from './SponsorWall.module.css'
 
-/** Sponsor logos, one column per category. Logos are shown in monochrome. */
+/** Sponsor logos, one column per category, in their own colors. The white "dark background" version is used when one is uploaded. */
 export function SponsorWall({ groups }: { groups: SponsorGroup[] }) {
   return (
     <div className={styles.wall} data-count={groups.length}>
@@ -13,7 +13,7 @@ export function SponsorWall({ groups }: { groups: SponsorGroup[] }) {
             {g.sponsors.map((s) => {
               const logo = s.logoOnDark ?? s.logo
               const inner = logo ? (
-                <Image src={logo.src} alt={s.name} width={logo.width} height={logo.height} sizes="220px" className={`${styles.logo} ${s.logoOnDark ? '' : styles.mono}`} />
+                <Image src={logo.src} alt={s.name} width={logo.width} height={logo.height} sizes="220px" className={`${styles.logo} ${s.logoOnDark ? styles.white : ''}`} />
               ) : (
                 <span className={styles.text}>{s.name}</span>
               )

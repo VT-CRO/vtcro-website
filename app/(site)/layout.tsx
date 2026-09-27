@@ -3,7 +3,8 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { SiteFooter } from '@/components/site/SiteFooter'
 import { SiteHeader } from '@/components/site/SiteHeader'
-import { getRecruitment, getSite, getTeams } from '@/lib/content'
+import { getSite, getTeams } from '@/lib/content'
+import { DEFAULT_SHARE_IMAGE } from '@/lib/format'
 import { NAV } from '@/lib/nav'
 import { plain } from '@/lib/text'
 
@@ -15,14 +16,14 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: 'website',
       siteName: site.shortName,
-      images: site.shareImage ? [{ url: site.shareImage.src, width: site.shareImage.width, height: site.shareImage.height }] : ['/og-default.jpg'],
+      images: site.shareImage ? [{ url: site.shareImage.src, width: site.shareImage.width, height: site.shareImage.height }] : [DEFAULT_SHARE_IMAGE],
     },
     twitter: { card: 'summary_large_image' },
   }
 }
 
 export default async function SiteLayout({ children }: { children: ReactNode }) {
-  const [site, recruitment, design, support] = await Promise.all([getSite(), getRecruitment(), getTeams('design'), getTeams('support')])
+  const [site, design, support] = await Promise.all([getSite(), getTeams('design'), getTeams('support')])
   const navTeams = [...design, ...support].map((t) => ({
     slug: t.slug,
     name: t.name,
@@ -39,8 +40,6 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
         nav={NAV}
         github={site.github}
         instagram={site.instagram}
-        applyOpen={recruitment.open}
-        applyLabel={recruitment.open ? recruitment.buttonLabel : 'Apply'}
         teams={navTeams}
       />
       <main id="main" tabIndex={-1}>

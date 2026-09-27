@@ -1,5 +1,5 @@
 import { UserIcon } from '../icons'
-import { defineField, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 import { imageField, placeholderField, urlValidation } from './helpers'
 
 export const member = defineType({
@@ -7,7 +7,7 @@ export const member = defineType({
   title: 'Member',
   type: 'document',
   icon: UserIcon,
-  description: 'One entry per person. Add them to teams from the team’s page (Teams → People).',
+  description: 'One entry per person. Pick their teams below; leadership titles are set on each team’s page.',
   fields: [
     defineField({ name: 'name', title: 'Full name', type: 'string', validation: (r) => r.required() }),
     defineField({
@@ -35,20 +35,50 @@ export const member = defineType({
       description: 'Only active members appear on the website. Alumni/inactive records are kept for history.',
       validation: (r) => r.required(),
     }),
-    imageField('photo', 'Headshot', {
+    defineField({
+      name: 'teams',
+      title: 'Teams',
+      type: 'array',
+      description:
+        'Every team this person is on. Design teams put them under "Engineering Team" on the Team page, support teams under "Support Team". Leadership (the Executive board and team leads) is set on the team’s own page: Teams → the team → People → Team leadership.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'membership',
+          fields: [
+            defineField({ name: 'team', title: 'Team', type: 'reference', to: [{ type: 'team' }], validation: (r) => r.required() }),
+            defineField({
+              name: 'role',
+              title: 'Role on this team (optional)',
+              type: 'string',
+              description: 'e.g. Software Lead. Leave empty to show "<Team> Engineer" / "<Team> Member".',
+            }),
+          ],
+          preview: {
+            select: { title: 'team.name', subtitle: 'role', media: 'team.logo' },
+          },
+        }),
+      ],
+      validation: (r) =>
+        r.custom((items: any[] | undefined) => {
+          const ids = (items ?? []).map((i) => i?.team?._ref).filter(Boolean)
+          return new Set(ids).size === ids.length ? true : 'Each team only needs to be added once.'
+        }),
+    }),
+    imageField('photo', 'Headshot (optional)', {
       description: 'Portrait photo. Use the crop tool to center the face; it is shown as a 4:5 portrait.',
     }),
-    defineField({ name: 'major', title: 'Major', type: 'string' }),
+    defineField({ name: 'major', title: 'Major (optional)', type: 'string' }),
     defineField({
       name: 'gradYear',
-      title: 'Graduation year',
+      title: 'Graduation year (optional)',
       type: 'number',
       validation: (r) => r.integer().min(2000).max(2100),
     }),
     defineField({ name: 'bio', title: 'Short bio (optional)', type: 'text', rows: 4 }),
-    defineField({ name: 'linkedin', title: 'LinkedIn URL', type: 'url', validation: urlValidation }),
-    defineField({ name: 'website', title: 'Personal website', type: 'url', validation: urlValidation }),
-    defineField({ name: 'github', title: 'GitHub URL', type: 'url', validation: urlValidation }),
+    defineField({ name: 'linkedin', title: 'LinkedIn URL (optional)', type: 'url', validation: urlValidation }),
+    defineField({ name: 'website', title: 'Personal website (optional)', type: 'url', validation: urlValidation }),
+    defineField({ name: 'github', title: 'GitHub URL (optional)', type: 'url', validation: urlValidation }),
     defineField({
       name: 'email',
       title: 'Email (private)',
@@ -59,13 +89,15 @@ export const member = defineType({
   ],
   orderings: [
     { title: 'Name A→Z', name: 'nameAsc', by: [{ field: 'name', direction: 'asc' }] },
-    { title: 'Graduation year', name: 'grad', by: [{ field: 'gradYear', direction: 'asc' }] },
+    { title: 'Graduation year (optional)', name: 'grad', by: [{ field: 'gradYear', direction: 'asc' }] },
   ],
   preview: {
-    select: { title: 'name', status: 'status', major: 'major', year: 'gradYear', media: 'photo' },
-    prepare: ({ title, status, major, year, media }) => ({
+    select: { title: 'name', status: 'status', team0: 'teams.0.team.name', team1: 'teams.1.team.name', team2: 'teams.2.team.name', media: 'photo' },
+    prepare: ({ title, status, team0, team1, team2, media }) => ({
       title,
-      subtitle: [status !== 'active' ? (status === 'alumni' ? 'Alumni' : 'Inactive') : null, major, year].filter(Boolean).join(' · '),
+      subtitle: [status !== 'active' ? (status === 'alumni' ? 'Alumni' : 'Inactive') : null, [team0, team1, team2].filter(Boolean).join(', ') || 'No team yet']
+        .filter(Boolean)
+        .join(' · '),
       media,
     }),
   },

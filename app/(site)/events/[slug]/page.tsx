@@ -8,7 +8,7 @@ import { RichText } from '@/components/ui/RichText'
 import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { getEvent, getEvents } from '@/lib/content'
-import { dateParts, eventWhen } from '@/lib/format'
+import { dateParts, eventWhen, DEFAULT_SHARE_IMAGE } from '@/lib/format'
 import styles from './page.module.css'
 
 export const revalidate = 3600
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: event.shortDescription || `${eventWhen(event)}. ${event.location.name}`,
     alternates: { canonical: `/events/${event.slug}` },
     robots: event.isPlaceholder ? { index: false } : undefined,
-    openGraph: event.image ? { images: [{ url: event.image.src, alt: event.image.alt }] } : undefined,
+    openGraph: { images: event.image ? [{ url: event.image.src, alt: event.image.alt }] : [DEFAULT_SHARE_IMAGE] },
   }
 }
 

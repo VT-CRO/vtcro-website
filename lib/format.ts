@@ -37,3 +37,6 @@ export function youTubeId(url: string | null | undefined) {
 export const isExternal = (href: string) => /^(https?:)?\/\//.test(href) || href.startsWith('mailto:')
 
 export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vtcro.org').replace(/\/$/, '')
+
+/** Link-preview image (the VT CRO logo) used when a page has no photo of its own. */
+export const DEFAULT_SHARE_IMAGE = { url: '/og-default.jpg', width: 1200, height: 630, alt: 'VT CRO' }

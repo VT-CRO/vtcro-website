@@ -36,11 +36,6 @@ export function SiteFooter({ site, nav, designTeams, supportTeams }: Props) {
                 <Inline text={site.description} />
               </p>
             )}
-            {site.contact.general && (
-              <a className={styles.email} href={`mailto:${site.contact.general}`}>
-                {site.contact.general}
-              </a>
-            )}
           </div>
 
           <nav className={styles.cols} aria-label="Footer">

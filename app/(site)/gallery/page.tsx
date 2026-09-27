@@ -9,6 +9,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { getAlbums, getEvents, getPhotos } from '@/lib/content'
 import { formatDate } from '@/lib/format'
 import styles from './page.module.css'
+import { ComingSoon } from '@/components/ui/ComingSoon'
 
 export const revalidate = 3600
 
@@ -33,7 +34,7 @@ export default async function PhotosPage() {
             <PhotoBrowser photos={ordered} events={eventFilters} albums={albums.map((a) => ({ slug: a.slug, label: a.title }))} />
           </Suspense>
         ) : (
-          <p className="t-lead">Photos will appear here once albums are added in the CMS.</p>
+          <ComingSoon label="Gallery" page />
         )}
       </Section>
 

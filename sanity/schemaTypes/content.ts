@@ -272,8 +272,8 @@ export const sponsor = defineType({
   fields: [
     defineField({ name: 'name', title: 'Sponsor name', type: 'string', validation: (r) => r.required() }),
     imageField('logo', 'Logo', { description: 'Transparent PNG or SVG preferred.' }),
-    imageField('logoOnDark', 'Logo for dark backgrounds (optional)', {
-      description: 'A white or light version. If empty, the regular logo is shown on a light tile.',
+    imageField('logoOnDark', 'White logo for dark backgrounds (optional)', {
+      description: 'Only needed if the regular logo is dark and would disappear on the website’s dark background. If uploaded, it is used instead of the regular logo.',
     }),
     defineField({ name: 'category', title: 'Category', type: 'reference', to: [{ type: 'sponsorCategory' }], validation: (r) => r.required() }),
     defineField({ name: 'tier', title: 'Tier (optional)', type: 'reference', to: [{ type: 'sponsorTier' }] }),

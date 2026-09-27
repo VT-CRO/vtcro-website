@@ -90,7 +90,7 @@ The inbox each topic goes to is edited in the CMS (**Contact & social links → 
 2. At the domain registrar, replace the Webflow DNS records with the records Vercel shows:
    - `A` record for the apex domain
    - `CNAME` for `www`
-3. Old Webflow URLs are redirected automatically (see `next.config.ts`). For example, `/design-teams/nav` goes to `/teams/autonav`, and `/gallery` goes to `/photos`.
+3. Old Webflow URLs are redirected automatically (see `next.config.ts`). For example, `/design-teams/nav` goes to `/teams/autonav`, and `/photos` goes to `/gallery`.
 4. After verifying the new site, cancel the Webflow hosting plan.
 
 ## 8. Backups
@@ -110,7 +110,7 @@ app/(site)/            Pages. One file per route; team/event/member/album pages 
   teams/[slug]         ← every team page, generated from the CMS
   team/[slug]          ← every member profile
   events/[slug]        ← every event (+ calendar.ics download)
-  photos/[album]       ← every album
+  gallery/[album]      ← every album
 app/studio             The CMS dashboard at /studio
 app/api/revalidate     Webhook that refreshes the site after Publish
 components/            Reusable UI (TeamCard, MemberCard, AwardLedger, PhotoGrid, Lightbox, …)

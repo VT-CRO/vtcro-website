@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import type { ComponentType, ReactNode } from 'react'
 import { AwardLedger } from '@/components/awards/AwardLedger'
 import { EventCard } from '@/components/events/EventCard'
-import { ArrowLeft, ArrowRight, ArrowUpRight, BuildingIcon, CheckIcon, CpuIcon, DocIcon, GitHubIcon, GlobeIcon, PinIcon, TrophyIcon, WrenchIcon } from '@/components/icons'
+import { ArrowLeft, ArrowRight, ArrowUpRight, CheckIcon, CpuIcon, DocIcon, GitHubIcon, GlobeIcon, PinIcon, TrophyIcon, WrenchIcon } from '@/components/icons'
 import { PeopleGrid } from '@/components/people/PeopleGrid'
 import { Media } from '@/components/ui/Media'
 import { RichText } from '@/components/ui/RichText'
@@ -14,6 +14,8 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { VideoEmbed } from '@/components/ui/VideoEmbed'
 import { getRecruitment, getTeam, getTeams } from '@/lib/content'
 import styles from './page.module.css'
+import { DEFAULT_SHARE_IMAGE } from '@/lib/format'
+import { ComingSoon } from '@/components/ui/ComingSoon'
 
 export const revalidate = 3600
 
@@ -32,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${team.name} · VT CRO`,
       description,
-      images: team.cover ? [{ url: team.cover.src, width: team.cover.width, height: team.cover.height, alt: team.cover.alt }] : undefined,
+      images: team.cover ? [{ url: team.cover.src, width: team.cover.width, height: team.cover.height, alt: team.cover.alt }] : [DEFAULT_SHARE_IMAGE],
     },
   }
 }
@@ -51,7 +53,6 @@ export default async function TeamPage({ params }: { params: Promise<{ slug: str
   const facts: { label: string; value: ReactNode; icon: ComponentType<{ size?: number }> }[] = [
     { label: 'Type', value: typeLabel, icon: WrenchIcon },
     ...(team.code ? [{ label: 'Code', value: <span className={styles.code}>{team.code}</span>, icon: CpuIcon }] : []),
-    ...(team.department ? [{ label: 'Department', value: team.department, icon: BuildingIcon }] : []),
     ...(team.competition?.name
       ? [
           {
@@ -241,8 +242,11 @@ export default async function TeamPage({ params }: { params: Promise<{ slug: str
       </Section>
 
       {/* ───── People ───── */}
-      {team.leadership.length + team.roster.length > 0 && (
-        <Section tone="light" labelledBy="people-heading">
+      <Section tone="light" labelledBy="people-heading">
+          {team.leadership.length + team.roster.length === 0 ? (
+            <ComingSoon label="Members" as="h2" id="people-heading" />
+          ) : (
+            <>
             <SectionHeader heading={`The ${team.name} team`} id="people-heading" />
             {team.leadership.length > 0 && (
               <div className={styles.peopleGroup}>
@@ -256,8 +260,9 @@ export default async function TeamPage({ params }: { params: Promise<{ slug: str
                 <PeopleGrid people={team.roster} dense />
               </div>
             )}
-        </Section>
-      )}
+            </>
+          )}
+      </Section>
 
       {/* ───── Awards ───── */}
       {team.awards.length > 0 && (

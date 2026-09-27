@@ -13,12 +13,10 @@ type Props = {
   nav: { href: string; label: string; icon?: string }[]
   github: string | null
   instagram: string | null
-  applyOpen: boolean
-  applyLabel: string
   teams: NavTeam[]
 }
 
-export function SiteHeader({ nav, github, instagram, applyOpen, applyLabel, teams }: Props) {
+export function SiteHeader({ nav, github, instagram, teams }: Props) {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -94,11 +92,6 @@ export function SiteHeader({ nav, github, instagram, applyOpen, applyLabel, team
                 <InstagramIcon size={17} />
               </a>
             )}
-            <Link href="/apply" className={`btn btn--sm ${applyOpen ? 'btn--primary' : 'btn--secondary'} ${styles.apply}`}>
-              <span className={`status-dot ${applyOpen ? 'status-dot--on' : ''}`} aria-hidden="true" />
-              {applyLabel}
-              <span className="sr-only">{applyOpen ? '(applications open)' : '(applications closed)'}</span>
-            </Link>
             <button
               type="button"
               className={styles.menuButton}
@@ -123,8 +116,6 @@ export function SiteHeader({ nav, github, instagram, applyOpen, applyLabel, team
         isActive={isActive}
         github={github}
         instagram={instagram}
-        applyOpen={applyOpen}
-        applyLabel={applyLabel}
         teams={teams}
       />
     </>
@@ -138,8 +129,6 @@ function MobileMenu({
   isActive,
   github,
   instagram,
-  applyOpen,
-  applyLabel,
   teams,
 }: Omit<Props, never> & { open: boolean; onClose: () => void; isActive: (href: string) => boolean }) {
   const panel = useRef<HTMLDivElement>(null)

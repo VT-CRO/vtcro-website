@@ -16,7 +16,7 @@
 .link {
   display: inline-flex;
   align-items: center;
-  opacity: 0.8;
+  opacity: 0.92;
   transition: opacity var(--dur-2) var(--ease);
 }
 a.link:hover {
@@ -28,13 +28,7 @@ a.link:hover {
   max-width: 240px;
   object-fit: contain;
 }
-.mono {
-  filter: brightness(0) invert(1);
-}
-:global(.theme-light) .logo:not(.mono) {
-  filter: invert(1);
-}
-:global(.theme-light) .mono {
+:global(.theme-light) .white {
   filter: brightness(0);
 }
 .text {

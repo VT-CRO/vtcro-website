@@ -55,7 +55,7 @@ export function Hero({ hero, sponsors }: Props) {
                         width={logo.width}
                         height={logo.height}
                         sizes="200px"
-                        className={`${styles.logoImg} ${s.logoOnDark ? '' : styles.mono}`}
+                        className={styles.logoImg}
                       />
                     ) : (
                       <span className={styles.logoText}>{s.name}</span>
