@@ -1,20 +1,27 @@
 import Link from 'next/link'
-import { ArrowUpRight, MedalIcon, RibbonIcon, TrophyIcon } from '@/components/icons'
+import { ArrowUpRight, TrophyIcon } from '@/components/icons'
 import type { Award } from '@/lib/content'
+import { ShowMore } from './ShowMore'
 import styles from './AwardLedger.module.css'
 
-/** Awards as one list, most recent first. `showTeam` is off on team pages (the team is implied). */
-export function AwardLedger({ awards, showTeam = true }: { awards: Award[]; showTeam?: boolean }) {
-  return (
-    <ol className={styles.list}>
+type Props = {
+  awards: Award[]
+  /** Off on team pages (the team is implied). */
+  showTeam?: boolean
+  /** Homepage: show only the most recent (4 on phones, 6 on larger screens); the rest open with "Show all awards". */
+  collapse?: boolean
+}
+
+/** Awards as a compact grid of tiles, most recent first. */
+export function AwardLedger({ awards, showTeam = true, collapse }: Props) {
+  const list = (
+    <ul className={styles.grid}>
       {awards.map((a) => {
-        const Icon = a.rank === 1 ? TrophyIcon : a.rank ? MedalIcon : RibbonIcon
+        const tag = a.team ? a.team.code || a.team.name : a.projectCode || a.projectName
         return (
-          <li key={a.id} className={styles.row} data-reveal>
-            <span className={styles.icon} aria-hidden="true">
-              <Icon size={20} />
-            </span>
-            <div className={styles.what}>
+          <li key={a.id} className={styles.tile} data-reveal>
+            <TrophyIcon size={18} className={styles.icon} aria-hidden="true" />
+            <div className={styles.body}>
               <h3 className={styles.title}>
                 {a.placement && <span className={styles.place}>{a.placement}</span>}
                 {a.url ? (
@@ -29,21 +36,31 @@ export function AwardLedger({ awards, showTeam = true }: { awards: Award[]; show
                 {a.competition}
                 {a.location && <span> · {a.location}</span>}
               </p>
-            </div>
-            <div className={styles.side}>
-              {showTeam && (a.team || a.projectName) &&
-                (a.team ? (
-                  <Link href={`/teams/${a.team.slug}`} className="chip">
-                    {a.team.code || a.team.name}
-                  </Link>
+              <div className={styles.foot}>
+                {showTeam && tag ? (
+                  a.team ? (
+                    <Link href={`/teams/${a.team.slug}`} className="chip">
+                      {tag}
+                    </Link>
+                  ) : (
+                    <span className="chip">{tag}</span>
+                  )
                 ) : (
-                  <span className="chip">{a.projectName}</span>
-                ))}
-              <span className={styles.year}>{a.year}</span>
+                  <span />
+                )}
+                <span className={styles.year}>{a.year}</span>
+              </div>
             </div>
           </li>
         )
       })}
-    </ol>
+    </ul>
+  )
+
+  if (!collapse || awards.length <= 4) return list
+  return (
+    <ShowMore more={`Show all ${awards.length} awards`} less="Show fewer" desktopNeeded={awards.length > 6}>
+      {list}
+    </ShowMore>
   )
 }

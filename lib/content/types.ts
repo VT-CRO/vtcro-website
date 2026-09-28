@@ -112,6 +112,7 @@ export type Award = {
   featured: boolean
   team: TeamSummary | null
   projectName: string | null
+  projectCode: string | null
 }
 
 export type Photo = {

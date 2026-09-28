@@ -59,7 +59,7 @@ export default async function HomePage() {
         return (
           <Section key={s.key} id="awards" tone={s.tone} background={s.background} labelledBy="awards-heading">
             <SectionHeader heading={s.heading || 'Awards & Achievements'} intro={s.intro} id="awards-heading" />
-            <AwardLedger awards={awards} />
+            <AwardLedger awards={awards} collapse />
           </Section>
         )
 
@@ -134,7 +134,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero hero={home.hero} sponsors={sponsors} />
+      <Hero hero={home.hero} sponsors={sponsors} applicationsOpen={recruitment.open} />
       {home.sections.map(render)}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </>

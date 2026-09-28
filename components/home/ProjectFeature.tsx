@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Icon, RibbonIcon, TrophyIcon } from '@/components/icons'
+import { ArrowRight, Icon, TrophyIcon } from '@/components/icons'
 import { Media } from '@/components/ui/Media'
 import { Section } from '@/components/ui/Section'
 import { VideoEmbed } from '@/components/ui/VideoEmbed'
@@ -44,7 +44,9 @@ export function ProjectFeature({ project, section }: { project: Project; section
             <ul className={styles.facts}>
               {project.awards.map((a) => (
                 <li key={a.id}>
-                  <span className="icon-badge">{a.rank === 1 ? <TrophyIcon size={18} /> : <RibbonIcon size={18} />}</span>
+                  <span className="icon-badge">
+                    <TrophyIcon size={18} />
+                  </span>
                   <span>
                     <strong>{[a.placement, a.title].filter(Boolean).join(' · ')}</strong>
                     <span className={styles.factSub}>

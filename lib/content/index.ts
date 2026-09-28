@@ -325,6 +325,7 @@ export const getAwards = cache(async (): Promise<Award[]> => {
         featured: Boolean(a.featured),
         team: teams.get(a.team?._ref) ?? null,
         projectName: project ? str(project.name) : null,
+        projectCode: project ? str(project.code) : null,
       }
     })
     .sort((a, b) => b.year - a.year)

@@ -1,58 +1,75 @@
-.list {
-  border-top: 1px solid var(--line-2);
-}
-.row {
+.grid {
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr);
-  gap: 6px 18px;
-  align-items: center;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--line);
+  gap: 12px;
+}
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+@media (min-width: 1080px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.tile {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 14px;
+  padding: 18px 18px 16px;
+  border-radius: var(--radius-m);
+  box-shadow: 0 0 0 1px var(--line-2) inset;
+}
+@media (min-width: 700px) {
+  .tile {
+    padding: 22px 22px 20px;
+  }
 }
 .icon {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  color: var(--text-2);
-  box-shadow: 0 0 0 1px var(--line-2) inset;
-  grid-row: span 2;
+  margin-top: 3px;
+  color: var(--text-3);
 }
-.what {
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   min-width: 0;
 }
 .title {
   font-size: 1.0625rem;
   font-weight: 500;
   letter-spacing: -0.01em;
-  line-height: 1.4;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
-.title a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+.title a svg {
+  display: inline;
+  vertical-align: -1px;
 }
 .place {
   font-weight: 600;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 .place::after {
   content: '·';
-  margin-left: 10px;
+  margin-left: 8px;
   color: var(--text-3);
   font-weight: 400;
 }
 .comp {
-  margin-top: 4px;
   font-size: 0.875rem;
+  line-height: 1.45;
   color: var(--text-3);
 }
-.side {
-  grid-column: 2;
+.foot {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
+  margin-top: auto;
+  padding-top: 8px;
 }
 .year {
   font-family: var(--font-mono);
@@ -60,17 +77,24 @@
   color: var(--text-3);
   font-variant-numeric: tabular-nums;
 }
-@media (min-width: 800px) {
-  .row {
-    grid-template-columns: 40px minmax(0, 1fr) auto;
-    gap: 24px;
-    padding: 22px 0;
+
+/* Homepage: 4 awards on phones, 6 on larger screens, until "Show all" is pressed. */
+.collapsible:not([data-open]) .tile:nth-child(n + 5) {
+  display: none;
+}
+@media (min-width: 700px) {
+  .collapsible:not([data-open]) .tile:nth-child(n + 5) {
+    display: grid;
   }
-  .icon {
-    grid-row: auto;
+  .collapsible:not([data-open]) .tile:nth-child(n + 7) {
+    display: none;
   }
-  .side {
-    grid-column: auto;
-    gap: 20px;
+  .phoneOnly {
+    display: none !important;
   }
+}
+.more {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
 }

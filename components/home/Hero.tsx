@@ -5,10 +5,10 @@ import type { Home, SponsorGroup } from '@/lib/content'
 import { HeroVideo } from './HeroVideo'
 import styles from './Hero.module.css'
 
-type Props = { hero: Home['hero']; sponsors: SponsorGroup[] }
+type Props = { hero: Home['hero']; sponsors: SponsorGroup[]; applicationsOpen: boolean }
 
 /** Opening screen: the VT CRO logo, large and centered, with sponsor logos beneath it. */
-export function Hero({ hero, sponsors }: Props) {
+export function Hero({ hero, sponsors, applicationsOpen }: Props) {
   const groups = hero.showSponsors ? sponsors.slice(0, 2) : []
   return (
     <section className={styles.hero}>
@@ -27,10 +27,13 @@ export function Hero({ hero, sponsors }: Props) {
 
       <div className={`container ${styles.ctasWrap}`}>
         <nav className={styles.ctas} aria-label="Get started">
-          <Link href="/apply" className="btn btn--light">
-            Apply
-          </Link>
-          <a href="#design-teams" className="btn btn--secondary">
+          {/* Apply only appears while applications are open (Recruitment / Apply in the CMS). */}
+          {applicationsOpen && (
+            <Link href="/apply" className="btn btn--light">
+              Apply
+            </Link>
+          )}
+          <a href="#design-teams" className={`btn ${applicationsOpen ? 'btn--secondary' : 'btn--light'}`}>
             Teams
           </a>
           <Link href="/team" className="btn btn--secondary">

@@ -95,8 +95,8 @@ Open the member and set **Status → Alumni**, then Publish. They disappear from
 
 ### Open or close applications
 **Recruitment / Apply**:
-- **To open:** switch **Applications open?** on, paste the **Application form link**, set **Applications open on / close on**, then **Publish**. The Apply page shows the application period and an Apply button.
-- **To close:** switch it off and **Publish**. The Apply page shows the closed message, and no dates appear.
+- **To open:** switch **Applications open?** on, paste the **Application form link**, set **Applications open on / close on**, then **Publish**. The Apply page shows the application period and an Apply button, and an **Apply** button appears at the top of the homepage.
+- **To close:** switch it off and **Publish**. The Apply page shows the closed message, no dates appear, and the homepage Apply button disappears.
 
 ### Add an event
 **Events → Upcoming → +**: name, **Generate** address, start and end date/time, location, image, description → Publish.
@@ -111,7 +111,9 @@ Open the member and set **Status → Alumni**, then Publish. They disappear from
 5. Publish.
 
 ### Add an award
-**Awards → +**: award name, placement (e.g. *1st*), competition, year, location, **Team** → Publish. It appears on the homepage and on that team's page.
+**Awards → +**: award name, placement (e.g. *1st*), competition, year, location, **Team** (or **Project**, e.g. WorkCell) → Publish. It appears on the homepage and on that team's page.
+
+The homepage shows the most recent awards (six on computers, four on phones) with a **Show all awards** button for the rest, so the section stays short as the list grows. Each award is labeled with its team's code, or the project's code (WorkCell is *MWC*, set in **Projects → WorkCell → Code**).
 
 ### Add or hide a sponsor
 **Sponsors → Sponsors → +**: name, logo, **Category** (Corporate or Department Supporters), website → Publish.

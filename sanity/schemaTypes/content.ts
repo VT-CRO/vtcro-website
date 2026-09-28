@@ -70,6 +70,13 @@ export const project = defineType({
   fields: [
     defineField({ name: 'name', title: 'Project name', type: 'string', validation: (r) => r.required() }),
     defineField({ name: 'slug', title: 'Web address', type: 'slug', options: { source: 'name' }, validation: (r) => r.required() }),
+    defineField({
+      name: 'code',
+      title: 'Code',
+      type: 'string',
+      description: 'Optional short code shown on this project’s awards, e.g. MWC (2–4 capital letters).',
+      validation: (r) => r.max(4).uppercase(),
+    }),
     defineField({ name: 'label', title: 'Small label', type: 'string', description: 'e.g. "Former design team". Shown above the name.' }),
     defineField({ name: 'status', title: 'Status line', type: 'string', description: 'e.g. "Open-source launch coming soon". Shown with a highlight dot.' }),
     defineField({ name: 'summary', title: 'Summary', type: 'text', rows: 4 }),
