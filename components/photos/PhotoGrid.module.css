@@ -52,3 +52,13 @@
     gap: 10px;
   }
 }
+/* Measured layout (see justify() in PhotoGrid.tsx): each photo is placed at its exact size. */
+.justified {
+  display: block;
+  position: relative;
+}
+.justified .item {
+  position: absolute;
+  aspect-ratio: auto;
+  max-height: none;
+}

@@ -39,18 +39,18 @@
   min-height: 0;
 }
 .stage {
-  display: grid;
-  place-items: center;
+  position: relative;
   min-height: 0;
   transition: transform 200ms var(--ease);
 }
+/* Fill the stage and letterbox, so every photo is as large as the viewport allows (never cut off,
+   and small or high-DPR sources are scaled up rather than shown at their pixel size). */
 .image {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  border-radius: 2px;
   animation: fade 360ms var(--ease);
 }
 .caption {
