@@ -205,12 +205,72 @@
   gap: 16px;
 }
 .tier {
+  position: relative;
+  overflow: hidden;
   display: grid;
   gap: 22px;
   align-content: start;
   padding: clamp(24px, 3vw, 32px);
   border-radius: var(--radius-l);
   box-shadow: 0 0 0 1px var(--line-2) inset;
+  /* Each tier's metal colors: a faint wash across the top of the card and a small gem by the name. */
+  --m1: transparent;
+  --m2: transparent;
+  --m3: transparent;
+}
+.tier::after {
+  /* a faint wash of the tier's color across the top of the card */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(120% 55% at 0% 0%, color-mix(in srgb, var(--m1) var(--wash, 14%), transparent), transparent 70%);
+  pointer-events: none;
+}
+.tier {
+  isolation: isolate;
+}
+.tierTop::after {
+  --wash: 22%;
+}
+.tier[data-tier='platinum'] {
+  --m1: #a7b0bd;
+  --m2: #eef1f5;
+  --m3: #c3cad4;
+}
+.tier[data-tier='diamond'] {
+  --m1: #4f9fc6;
+  --m2: #bfe9fb;
+  --m3: #7cc3e3;
+}
+.tier[data-tier='gold'] {
+  --m1: #b8912f;
+  --m2: #ecd48a;
+  --m3: #cfa846;
+}
+.tier[data-tier='silver'] {
+  --m1: #8e959c;
+  --m2: #d9dde1;
+  --m3: #aab0b6;
+}
+.gem {
+  display: none;
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--m2), var(--m3) 50%, var(--m1));
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.08);
+}
+.tier[data-tier] .gem {
+  display: inline-block;
+}
+.tier[data-tier='platinum'] .gem,
+.tierTop .gem {
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.12),
+    0 0 12px rgb(244 245 247 / 0.25);
 }
 .tierTop {
   color: #f5f5f4;
@@ -227,6 +287,9 @@
   border-bottom-color: rgb(255 255 255 / 0.14);
 }
 .tierName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 400;

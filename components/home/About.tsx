@@ -11,7 +11,7 @@ export function About({ about, section }: { about: Home['about']; section: HomeS
   ].filter((i) => i.text)
 
   return (
-    <Section id="about" tone={section.tone ?? 'light'} background={section.background} labelledBy="about-heading">
+    <Section id="about" tone={section.tone ?? 'light'} background={section.background} labelledBy="about-heading" className={styles.about}>
       <div className={styles.grid}>
         <h2 id="about-heading" className={`t-h2 ${styles.heading}`} data-reveal>
           {section.heading || 'About'}

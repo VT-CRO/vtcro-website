@@ -86,7 +86,10 @@ export default async function SponsorPage() {
 
       {/* ───── Talent ───── */}
       {(page.talent.body || page.talent.stats.length > 0) && (
-        <Section background={{ src: '/seed/photo-lab-build-night.webp', width: 2400, height: 1800, alt: '', position: '50% 50%' }} labelledBy="talent-heading">
+        <Section
+          background={page.talent.image ?? { src: '/seed/photo-lab-build-night.webp', width: 2400, height: 1800, alt: '', position: '50% 50%' }}
+          labelledBy="talent-heading"
+        >
           <div className={styles.talent}>
             <div className={styles.talentText} data-reveal>
               <h2 id="talent-heading" className="t-h2">
@@ -173,9 +176,18 @@ export default async function SponsorPage() {
           <SectionHeader heading={page.tiersHeading || 'Sponsorship tiers'} id="tiers-heading" center />
           <ol className={styles.tiers} data-count={page.tiers.length}>
             {page.tiers.map((t, i) => (
-              <li key={t.name} className={`${styles.tier} ${i === 0 ? styles.tierTop : ''}`} data-reveal style={{ ['--reveal-i' as string]: i }}>
+              <li
+                key={t.name}
+                className={`${styles.tier} ${i === 0 ? styles.tierTop : ''}`}
+                data-tier={t.name.trim().toLowerCase()}
+                data-reveal
+                style={{ ['--reveal-i' as string]: i }}
+              >
                 <div className={styles.tierHead}>
-                  <h3 className={styles.tierName}>{t.name}</h3>
+                  <h3 className={styles.tierName}>
+                    <span className={styles.gem} aria-hidden="true" />
+                    {t.name}
+                  </h3>
                   {t.amount && (
                     <p className={styles.tierAmount}>
                       {/* A range like "$5,000 – $14,999" always breaks after the dash, so every card lines up. */}

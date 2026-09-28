@@ -1,14 +1,18 @@
+/* Compact enough that the whole About section fits in one screen, on laptops and phones alike. */
+.about {
+  padding-block: clamp(64px, 8vw, 112px);
+}
 .grid {
   display: grid;
-  gap: 40px;
+  gap: 28px;
 }
 .items {
   display: grid;
 }
 .item {
   display: grid;
-  gap: 16px;
-  padding-block: clamp(28px, 4vw, 44px);
+  gap: 10px;
+  padding-block: clamp(18px, 2.4vw, 28px);
   border-top: 1px solid var(--line-2);
 }
 .item:last-child {
@@ -21,8 +25,9 @@
   color: var(--text-3);
 }
 .item dd {
-  max-width: 30ch;
-  font-size: clamp(1.4rem, 1.05rem + 1.5vw, 2.3rem);
+  max-width: 44ch;
+  font-size: clamp(1.2rem, 1rem + 0.9vw, 1.75rem);
+  line-height: 1.28;
 }
 @media (min-width: 1000px) {
   .grid {
@@ -35,7 +40,7 @@
     align-self: start;
   }
   .item:first-child {
-    padding-top: 12px;
+    padding-top: 8px;
     border-top: 0;
   }
 }

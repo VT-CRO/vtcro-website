@@ -373,6 +373,7 @@ export const sponsorsPage = defineType({
       fields: [
         { name: 'heading', title: 'Heading', type: 'string' },
         { name: 'body', title: 'Text', type: 'text', rows: 4 },
+        imageField('image', 'Background photo', { description: 'Shown in black and white behind this section, under a dark overlay.' }),
         { name: 'disciplines', title: 'Majors / disciplines', type: 'array', of: [{ type: 'string' }], description: 'Shown as small tags. Drag to reorder.' },
         statFields('Figures', 'e.g. 17% · Acceptance rate'),
       ],

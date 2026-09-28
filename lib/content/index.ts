@@ -509,6 +509,7 @@ export const getSponsorsPage = cache(async (): Promise<SponsorsPage> => {
     talent: {
       heading: str(d.talent?.heading),
       body: str(d.talent?.body),
+      image: toImg(d.talent?.image, ''),
       disciplines: list<string>(d.talent?.disciplines).map(str).filter(Boolean),
       stats: stats(d.talent?.stats),
     },

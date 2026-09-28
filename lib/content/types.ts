@@ -239,7 +239,7 @@ export type SponsorsPage = {
   heading: string
   intro: string
   highlights: Stat[]
-  talent: { heading: string; body: string; disciplines: string[]; stats: Stat[] }
+  talent: { heading: string; body: string; image: Img | null; disciplines: string[]; stats: Stat[] }
   eventsHeading: string
   eventsIntro: string
   hostedEvents: { icon: string; name: string; description: string; stats: Stat[] }[]

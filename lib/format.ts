@@ -36,7 +36,22 @@ export function youTubeId(url: string | null | undefined) {
 
 export const isExternal = (href: string) => /^(https?:)?\/\//.test(href) || href.startsWith('mailto:')
 
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vtcro.org').replace(/\/$/, '')
+const configuredUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vtcro.org').replace(/\/$/, '')
+
+/**
+ * The address the live site is actually served from, used for link previews, canonical links and the sitemap.
+ * Vercel reports the project's production domain: the vercel.app address until vtcro.org is connected, then
+ * vtcro.org. While vtcro.org still points elsewhere (the old Webflow site), links must use the vercel.app
+ * address or previews break. Once the domain is connected, the configured www address is used.
+ */
+function resolveSiteUrl() {
+  const production = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  if (process.env.VERCEL_ENV !== 'production' || !production) return configuredUrl
+  const bare = (host: string) => host.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/.*$/, '')
+  return bare(production) === bare(configuredUrl) ? configuredUrl : `https://${production}`
+}
+
+export const siteUrl = resolveSiteUrl()
 
 /** Link-preview image (the VT CRO logo) used when a page has no photo of its own. */
 export const DEFAULT_SHARE_IMAGE = { url: '/og-default.jpg', width: 1200, height: 630, alt: 'VT CRO' }
