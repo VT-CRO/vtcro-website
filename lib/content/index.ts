@@ -493,15 +493,40 @@ export const getSponsorGroups = cache(async (): Promise<SponsorGroup[]> => {
     .filter((g) => g.sponsors.length)
 })
 
+const stats = (v: any): { value: string; label: string }[] =>
+  list<any>(v)
+    .map((x) => ({ value: str(x.value), label: str(x.label) }))
+    .filter((x) => x.value || x.label)
+
 export const getSponsorsPage = cache(async (): Promise<SponsorsPage> => {
   const ix = await buildIndex()
   const d = ix.one('sponsorsPage') ?? ({} as RawDoc)
+  const cards = (v: any) => list<any>(v).map((r) => ({ icon: str(r.icon), title: str(r.title), body: str(r.body) })).filter((r) => r.title)
   return {
     heading: str(d.heading),
     intro: str(d.intro),
-    reasons: list<any>(d.reasons).map((r) => ({ icon: str(r.icon), title: str(r.title), body: str(r.body) })),
+    highlights: stats(d.highlights),
+    talent: {
+      heading: str(d.talent?.heading),
+      body: str(d.talent?.body),
+      disciplines: list<string>(d.talent?.disciplines).map(str).filter(Boolean),
+      stats: stats(d.talent?.stats),
+    },
+    eventsHeading: str(d.eventsHeading),
+    eventsIntro: str(d.eventsIntro),
+    hostedEvents: list<any>(d.hostedEvents)
+      .map((e) => ({ icon: str(e.icon), name: str(e.name), description: str(e.description), stats: stats(e.stats) }))
+      .filter((e) => e.name),
+    reasonsHeading: str(d.reasonsHeading),
+    reasons: cards(d.reasons),
+    tiersHeading: str(d.tiersHeading),
+    tiers: list<any>(d.tiers)
+      .map((t) => ({ name: str(t.name), amount: str(t.amount), benefits: list<string>(t.benefits).map(str).filter(Boolean) }))
+      .filter((t) => t.name),
+    tiersNote: str(d.tiersNote),
+    sponsorsHeading: str(d.sponsorsHeading),
     packetUrl: toFileUrl(d.packet),
-    packetLabel: str(d.packetLabel) || 'Download sponsorship packet',
+    packetLabel: str(d.packetLabel) || 'Download pitch deck',
     ctaHeading: str(d.ctaHeading),
     ctaBody: str(d.ctaBody),
   }

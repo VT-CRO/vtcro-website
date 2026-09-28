@@ -19,10 +19,21 @@ export const metadata: Metadata = {
   alternates: { canonical: '/gallery' },
 }
 
+/** Fisher–Yates shuffle (returns a new array). */
+function shuffle<T>(items: T[]): T[] {
+  const a = [...items]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
 export default async function PhotosPage() {
   const [photos, albums, { all: events }] = await Promise.all([getPhotos(), getAlbums(), getEvents()])
-  // Featured photos first, then everything else by album date.
-  const ordered = [...photos.filter((p) => p.featured), ...photos.filter((p) => !p.featured)]
+  // Featured photos first, then everything else in a shuffled order. The page is cached, so the order
+  // changes whenever it is rebuilt (after a Publish in the CMS, or at most hourly), not on every visit.
+  const ordered = [...shuffle(photos.filter((p) => p.featured)), ...shuffle(photos.filter((p) => !p.featured))]
   const eventFilters = events.filter((e) => photos.some((p) => p.eventSlug === e.slug)).map((e) => ({ slug: e.slug, label: e.name }))
 
   return (

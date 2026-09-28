@@ -234,10 +234,21 @@ export type Recruitment = {
   alternatives: { icon: string; title: string; description: string; linkLabel: string; url: string }[]
 }
 
+export type Stat = { value: string; label: string }
 export type SponsorsPage = {
   heading: string
   intro: string
+  highlights: Stat[]
+  talent: { heading: string; body: string; disciplines: string[]; stats: Stat[] }
+  eventsHeading: string
+  eventsIntro: string
+  hostedEvents: { icon: string; name: string; description: string; stats: Stat[] }[]
+  reasonsHeading: string
   reasons: { icon: string; title: string; body: string }[]
+  tiersHeading: string
+  tiers: { name: string; amount: string; benefits: string[] }[]
+  tiersNote: string
+  sponsorsHeading: string
   packetUrl: string | null
   packetLabel: string
   ctaHeading: string

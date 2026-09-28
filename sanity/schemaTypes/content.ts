@@ -205,7 +205,7 @@ export const album = defineType({
             { name: 'alt', title: 'Alt text', type: 'string' },
             { name: 'caption', title: 'Caption', type: 'string' },
             { name: 'credit', title: 'Photographer', type: 'string' },
-            { name: 'featured', title: 'Feature on homepage & gallery top', type: 'boolean' },
+            { name: 'featured', title: 'Show first in the gallery', type: 'boolean', description: 'Featured photos always appear at the top of the Gallery page, before the shuffled rest.' },
             {
               name: 'teams',
               title: 'Teams in this photo (optional)',

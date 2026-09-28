@@ -311,42 +311,147 @@ export const recruitment = defineType({
 
 /* ───────────────────────────── Sponsors page ───────────────────────────── */
 
+const statFields = (title: string, description: string) =>
+  defineField({
+    name: 'stats',
+    title,
+    description,
+    type: 'array',
+    of: [
+      defineArrayMember({
+        type: 'object',
+        name: 'stat',
+        fields: [
+          { name: 'value', title: 'Number', type: 'string', description: 'e.g. 17% or ~$65K' },
+          { name: 'label', title: 'Label', type: 'string', description: 'e.g. Acceptance rate' },
+        ],
+        preview: { select: { title: 'value', subtitle: 'label' } },
+      }),
+    ],
+  })
+
 export const sponsorsPage = defineType({
   name: 'sponsorsPage',
-  title: 'Sponsors page',
+  title: 'Sponsor page',
   type: 'document',
   icon: DiamondIcon,
+  groups: [
+    { name: 'top', title: 'Top', default: true },
+    { name: 'talent', title: 'Talent' },
+    { name: 'events', title: 'Events' },
+    { name: 'offer', title: 'What sponsors get' },
+    { name: 'tiers', title: 'Tiers' },
+    { name: 'closing', title: 'Closing & pitch deck' },
+  ],
   fields: [
-    defineField({ name: 'heading', title: 'Page heading', type: 'string' }),
-    defineField({ name: 'intro', title: 'Intro', type: 'text', rows: 3 }),
+    defineField({ name: 'heading', title: 'Page heading', type: 'string', group: 'top', description: 'Put *asterisks* around a word to show it in italics.' }),
+    defineField({ name: 'intro', title: 'Intro', type: 'text', rows: 3, group: 'top' }),
+    defineField({
+      name: 'highlights',
+      title: 'Key figures',
+      group: 'top',
+      description: 'Shown in a row under the heading, after the number of design teams and awards (those two are counted automatically).',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'highlight',
+          fields: [
+            { name: 'value', title: 'Number', type: 'string', description: 'e.g. ~$65K' },
+            { name: 'label', title: 'Label', type: 'string', description: 'e.g. Yearly spend' },
+          ],
+          preview: { select: { title: 'value', subtitle: 'label' } },
+        }),
+      ],
+    }),
+
+    defineField({
+      name: 'talent',
+      title: 'Talent',
+      type: 'object',
+      group: 'talent',
+      fields: [
+        { name: 'heading', title: 'Heading', type: 'string' },
+        { name: 'body', title: 'Text', type: 'text', rows: 4 },
+        { name: 'disciplines', title: 'Majors / disciplines', type: 'array', of: [{ type: 'string' }], description: 'Shown as small tags. Drag to reorder.' },
+        statFields('Figures', 'e.g. 17% · Acceptance rate'),
+      ],
+    }),
+
+    defineField({ name: 'eventsHeading', title: 'Heading', type: 'string', group: 'events' }),
+    defineField({ name: 'eventsIntro', title: 'Intro', type: 'text', rows: 2, group: 'events' }),
+    defineField({
+      name: 'hostedEvents',
+      title: 'Events we host',
+      group: 'events',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'hostedEvent',
+          fields: [
+            iconField(),
+            { name: 'name', title: 'Event name', type: 'string' },
+            { name: 'description', title: 'Description', type: 'text', rows: 3 },
+            statFields('Figures', 'e.g. 550 · Attendees'),
+          ],
+          preview: { select: { title: 'name', subtitle: 'description' } },
+        }),
+      ],
+    }),
+
+    defineField({ name: 'reasonsHeading', title: 'Heading', type: 'string', group: 'offer' }),
     defineField({
       name: 'reasons',
-      title: 'Why sponsor VT CRO',
+      title: 'Benefits',
+      group: 'offer',
       type: 'array',
       of: [
         defineArrayMember({
           type: 'object',
           name: 'reason',
-          fields: [
-            iconField(),
-            { name: 'title', title: 'Title', type: 'string' },
-            { name: 'body', title: 'Text', type: 'text', rows: 3 },
-          ],
+          fields: [iconField(), { name: 'title', title: 'Title', type: 'string' }, { name: 'body', title: 'Text', type: 'text', rows: 3 }],
           preview: { select: { title: 'title', subtitle: 'body' } },
         }),
       ],
     }),
+
+    defineField({ name: 'tiersHeading', title: 'Heading', type: 'string', group: 'tiers' }),
+    defineField({
+      name: 'tiers',
+      title: 'Sponsorship tiers',
+      group: 'tiers',
+      description: 'Highest tier first. The first tier is highlighted.',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'tier',
+          fields: [
+            { name: 'name', title: 'Tier name', type: 'string' },
+            { name: 'amount', title: 'Amount', type: 'string', description: 'e.g. $5,000 – $14,999' },
+            { name: 'benefits', title: 'Benefits', type: 'array', of: [{ type: 'string' }] },
+          ],
+          preview: { select: { title: 'name', subtitle: 'amount' } },
+        }),
+      ],
+    }),
+    defineField({ name: 'tiersNote', title: 'Note under the tiers', type: 'string', group: 'tiers' }),
+
+    defineField({ name: 'sponsorsHeading', title: 'Heading above current sponsors', type: 'string', group: 'closing' }),
+    defineField({ name: 'ctaHeading', title: 'Contact heading', type: 'string', group: 'closing' }),
+    defineField({ name: 'ctaBody', title: 'Contact text', type: 'text', rows: 3, group: 'closing' }),
     defineField({
       name: 'packet',
-      title: 'Sponsorship packet (PDF)',
+      title: 'Pitch deck (PDF)',
       type: 'file',
+      group: 'closing',
       options: { accept: 'application/pdf' },
+      description: 'Upload the sponsor pitch deck. Until a file is uploaded, the button shows "Coming soon".',
     }),
-    defineField({ name: 'packetLabel', title: 'Packet button text', type: 'string', initialValue: 'Download sponsorship packet' }),
-    defineField({ name: 'ctaHeading', title: 'Contact heading', type: 'string' }),
-    defineField({ name: 'ctaBody', title: 'Contact text', type: 'text', rows: 3 }),
+    defineField({ name: 'packetLabel', title: 'Pitch deck button text', type: 'string', group: 'closing', initialValue: 'Download pitch deck' }),
   ],
-  preview: { prepare: () => ({ title: 'Sponsors page' }) },
+  preview: { prepare: () => ({ title: 'Sponsor page' }) },
 })
 
 export const SINGLETONS = ['siteSettings', 'contactSettings', 'homePage', 'recruitment', 'sponsorsPage']

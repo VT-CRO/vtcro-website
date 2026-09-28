@@ -138,7 +138,7 @@ export const structure = (S: StructureBuilder, context: ConfigContext) =>
               orderableDocumentListDeskItem({ type: 'sponsorCategory', title: 'Sponsor categories', icon: DiamondIcon, S, context }),
               orderableDocumentListDeskItem({ type: 'sponsorTier', title: 'Sponsor tiers', icon: DiamondIcon, S, context }),
               S.divider(),
-              singleton(S, 'sponsorsPage', 'Sponsors page text', DiamondIcon),
+              singleton(S, 'sponsorsPage', 'Sponsor page', DiamondIcon),
             ]),
         ),
 

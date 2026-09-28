@@ -2,7 +2,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight, DiscordIcon, GitHubIcon, Icon, InstagramIcon, LinkedInIcon, YouTubeIcon } from '@/components/icons'
 import type { Site, SocialLink, TeamSummary } from '@/lib/content'
-import { SPONSORS_PAGE_LIVE } from '@/lib/nav'
 import { Inline } from '@/lib/text'
 import styles from './SiteFooter.module.css'
 
@@ -19,11 +18,7 @@ type Props = { site: Site; nav: { href: string; label: string; icon?: string }[]
 
 export function SiteFooter({ site, nav, designTeams, supportTeams }: Props) {
   const year = new Date().getFullYear()
-  const explore: Link_[] = [
-    ...nav.filter((n) => n.href !== '/'),
-    ...(SPONSORS_PAGE_LIVE ? [{ href: '/sponsors', label: 'Sponsors', icon: 'handshake' }] : []),
-    { href: '/teams', label: 'All teams', icon: 'layers' },
-  ]
+  const explore: Link_[] = [...nav.filter((n) => n.href !== '/'), { href: '/teams', label: 'All teams', icon: 'layers' }]
 
   return (
     <footer id="site-footer" className={styles.footer}>

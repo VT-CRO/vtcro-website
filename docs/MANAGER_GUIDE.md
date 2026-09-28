@@ -22,7 +22,7 @@ You can keep the entire website up to date without touching code. Everything is 
 | **Gallery (albums)** | Photo albums for the gallery |
 | **Awards** | Awards shown on the homepage and on team pages |
 | **Projects** | Featured projects (e.g. WorkCell) |
-| **Sponsors** | Sponsors, sponsor categories and tiers, and the **Sponsors page text** (see below) |
+| **Sponsors** | Sponsors (logos), sponsor categories, and the **Sponsor page** you share with companies (see below) |
 | **Recruitment / Apply** | The applications open/closed switch, application period, messages, recruitment steps |
 | **Contact & social links** | Emails, contact-form routing, GitHub, Instagram, LinkedIn, YouTube, Discord |
 | **Site settings** | Organization name, footer text, link-preview image |
@@ -107,7 +107,7 @@ Open the member and set **Status → Alumni**, then Publish. They disappear from
 1. **Gallery (albums) → +**: album title, **Generate** address, date.
 2. Drag many photos into **Photos** at once. You don't need to resize them.
 3. Optionally tag the album's **Event**, so the photos also appear on that event page.
-4. Click a photo to add a caption, the photographer's name, or **Feature** it first in the gallery.
+4. Click a photo to add a caption, the photographer's name, or turn on **Show first in the gallery**. Other photos appear in a shuffled order that changes whenever something is published (or hourly).
 5. Publish.
 
 ### Add an award
@@ -122,16 +122,21 @@ The homepage shows the most recent awards (six on computers, four on phones) wit
 - To hide a sponsor temporarily, switch off **Show on website**.
 - Drag sponsors in the list to change their order.
 
-### Sponsors page text
-**Sponsors → Sponsors page text** holds the words on vtcro.org/sponsors (the logos come from the Sponsors list):
+### The Sponsor page
+vtcro.org/sponsor is the page to share with companies. Every word and figure on it is edited in **Sponsors → Sponsor page**, one tab per section:
 
-| Field | Where it appears |
+| Tab | What it controls |
 |---|---|
-| **Page heading** | The large title at the top ("Partner with VT CRO") |
-| **Intro** | A short paragraph under the heading (currently empty, so nothing shows) |
-| **Why sponsor VT CRO** | Optional cards with an icon, title and sentence, e.g. what sponsors get |
-| **Sponsorship packet (PDF)** | Upload a PDF. The "Sponsorship packet · coming soon" button becomes a download |
-| **Contact heading / text** | The "Start a conversation" section at the bottom, above the email button |
+| **Top** | The big heading (put `*asterisks*` around a word for italics), the intro, and **Key figures**. The number of design teams, support teams and awards is counted automatically; add others here, e.g. *~$65K · Yearly spend* |
+| **Talent** | Heading, text, the majors shown as tags, and figures such as acceptance rate and average GPA |
+| **Events** | The events VT CRO hosts (CRO-Down, CRO Expo), each with a short description and its figures |
+| **What sponsors get** | The benefits list |
+| **Tiers** | Each tier's name, amount and benefits. Highest tier first; the first one is highlighted |
+| **Closing & pitch deck** | The closing heading and text, and the **Pitch deck (PDF)** |
+
+**Pitch deck:** upload the PDF in *Closing & pitch deck*. Until one is uploaded, the button shows "Pitch deck · Coming soon".
+
+The current sponsor logos near the bottom come from the Sponsors list. The "Become a sponsor" and email buttons use the sponsorship email in **Contact & social links** (or the general email if that's empty). Keep the figures current; update them at least once a year.
 
 ### Change the homepage
 - **Top of page:** the background photo and the line under the logo. Sponsor logos show under the buttons, one column per sponsor category.
