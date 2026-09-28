@@ -40,16 +40,13 @@ export default async function SponsorPage() {
     ...page.highlights,
   ]
 
-  const Deck = ({ light }: { light?: boolean }) =>
+  // Only shown once a pitch deck PDF has been uploaded in the CMS.
+  const Deck = () =>
     page.packetUrl ? (
-      <a href={page.packetUrl} target="_blank" rel="noreferrer" className={`btn ${light ? 'btn--light' : 'btn--secondary'}`}>
+      <a href={page.packetUrl} target="_blank" rel="noreferrer" className="btn btn--secondary">
         <DownloadIcon size={16} className="icon-static" /> {page.packetLabel}
       </a>
-    ) : (
-      <span className="btn btn--secondary" aria-disabled="true" title="Upload the pitch deck in the CMS: Sponsors → Sponsor page → Closing & pitch deck">
-        <DownloadIcon size={16} className="icon-static" /> Pitch deck · Coming soon
-      </span>
-    )
+    ) : null
 
   return (
     <>

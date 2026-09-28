@@ -134,7 +134,7 @@ vtcro.org/sponsor is the page to share with companies. Every word and figure on 
 | **Tiers** | Each tier's name, amount and benefits. Highest tier first; the first one is highlighted |
 | **Closing & pitch deck** | The closing heading and text, and the **Pitch deck (PDF)** |
 
-**Pitch deck:** upload the PDF in *Closing & pitch deck*. Until one is uploaded, the button shows "Pitch deck · Coming soon".
+**Pitch deck:** upload the PDF in *Closing & pitch deck*. A "Pitch deck" download button then appears at the top and bottom of the page; with no file uploaded, there is no button.
 
 The current sponsor logos near the bottom come from the Sponsors list. The "Become a sponsor" and email buttons use the sponsorship email in **Contact & social links** (or the general email if that's empty). Keep the figures current; update them at least once a year.
 

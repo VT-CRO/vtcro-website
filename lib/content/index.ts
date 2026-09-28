@@ -526,7 +526,7 @@ export const getSponsorsPage = cache(async (): Promise<SponsorsPage> => {
     tiersNote: str(d.tiersNote),
     sponsorsHeading: str(d.sponsorsHeading),
     packetUrl: toFileUrl(d.packet),
-    packetLabel: str(d.packetLabel) || 'Download pitch deck',
+    packetLabel: str(d.packetLabel) || 'Pitch deck',
     ctaHeading: str(d.ctaHeading),
     ctaBody: str(d.ctaBody),
   }

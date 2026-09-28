@@ -447,9 +447,9 @@ export const sponsorsPage = defineType({
       type: 'file',
       group: 'closing',
       options: { accept: 'application/pdf' },
-      description: 'Upload the sponsor pitch deck. Until a file is uploaded, the button shows "Coming soon".',
+      description: 'Upload the sponsor pitch deck. The "Pitch deck" download button appears on the page only once a file is uploaded.',
     }),
-    defineField({ name: 'packetLabel', title: 'Pitch deck button text', type: 'string', group: 'closing', initialValue: 'Download pitch deck' }),
+    defineField({ name: 'packetLabel', title: 'Pitch deck button text', type: 'string', group: 'closing', initialValue: 'Pitch deck' }),
   ],
   preview: { prepare: () => ({ title: 'Sponsor page' }) },
 })
