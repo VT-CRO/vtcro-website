@@ -4,7 +4,7 @@ import { ArrowRight, CheckIcon, DownloadIcon, Icon, MailIcon } from '@/component
 import { SponsorWall } from '@/components/sponsors/SponsorWall'
 import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { getAwards, getSite, getSponsorGroups, getSponsorsPage, getTeams, type Stat } from '@/lib/content'
+import { getAwards, getPeopleDirectory, getSite, getSponsorGroups, getSponsorsPage, getTeams, type Stat } from '@/lib/content'
 import { Inline } from '@/lib/text'
 import styles from './page.module.css'
 
@@ -21,19 +21,21 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** The page VT CRO shares with prospective sponsors. All copy and figures are edited in the CMS (Sponsors → Sponsor page). */
 export default async function SponsorPage() {
-  const [page, groups, site, design, support, awards] = await Promise.all([
+  const [page, groups, site, design, support, awards, people] = await Promise.all([
     getSponsorsPage(),
     getSponsorGroups(),
     getSite(),
     getTeams('design'),
     getTeams('support'),
     getAwards(),
+    getPeopleDirectory(),
   ])
   const email = site.contact.sponsorship
   const mailto = email ? `mailto:${email}?subject=${encodeURIComponent('Sponsoring VT CRO')}` : null
 
-  // Team and award counts are counted from the CMS so they never go stale.
+  // Member, team and award counts are counted from the CMS so they never go stale.
   const highlights: Stat[] = [
+    ...(people.total ? [{ value: String(people.total), label: 'Members' }] : []),
     ...(design.length ? [{ value: String(design.length), label: 'Design teams' }] : []),
     ...(support.length ? [{ value: String(support.length), label: 'Support teams' }] : []),
     ...(awards.length ? [{ value: String(awards.length), label: 'Awards & honors' }] : []),
