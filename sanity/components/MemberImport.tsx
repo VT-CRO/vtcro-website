@@ -4,23 +4,29 @@ import { useClient } from 'sanity'
 import { DownloadIcon, UploadIcon } from '../icons'
 
 /**
- * Members → Import from a spreadsheet.
- * Adds or updates many members at once from a Google Sheet / Excel / Google Form export,
- * with optional headshots matched to people by file name.
+ * Members → Spreadsheet & headshots.
+ * - Downloads every member as a CSV (every column, blanks included).
+ * - Adds or updates many members at once from a Google Sheet / Excel / Google Form export.
+ * - Uploads many headshots at once, matched to existing members by file name.
+ * The download uses the same columns the import reads, so a sheet can go out, be edited, and come back.
  */
 
 type TeamRow = { _id: string; name: string; code?: string; slug?: string }
 type ExistingMember = { _id: string; name: string; slug?: string; teams?: { _key: string; team?: { _ref: string }; role?: string }[] }
-type Field = 'name' | 'teams' | 'role' | 'major' | 'gradYear' | 'linkedin' | 'website' | 'github' | 'email' | 'status'
+type Field = 'name' | 'teams' | 'role' | 'major' | 'gradSemester' | 'gradYear' | 'bio' | 'linkedin' | 'website' | 'github' | 'email' | 'status'
 
 type Parsed = {
   line: number
   name: string
   slug: string
   teamIds: string[]
+  /** Role for a specific team, from "AutoNav (Software Lead)" in the Teams column. */
+  teamRoles: Record<string, string>
   role: string
   major: string
+  gradSemester: string
   gradYear: number | null
+  bio: string
   linkedin: string
   website: string
   github: string
@@ -31,13 +37,15 @@ type Parsed = {
   errors: string[]
 }
 
-const TEMPLATE_HEADERS = ['Name', 'Teams', 'Role', 'Major', 'Graduation year', 'LinkedIn', 'Website', 'GitHub', 'Email', 'Status']
+const TEMPLATE_HEADERS = ['Name', 'Teams', 'Role', 'Major', 'Graduation semester', 'Graduation year', 'LinkedIn', 'Website', 'GitHub', 'Email', 'Bio', 'Status']
 const FIELD_LABELS: Record<Field, string> = {
   name: 'Name',
   teams: 'Teams',
   role: 'Role',
   major: 'Major',
+  gradSemester: 'Graduation semester',
   gradYear: 'Graduation year',
+  bio: 'Bio',
   linkedin: 'LinkedIn',
   website: 'Website',
   github: 'GitHub',
@@ -65,7 +73,9 @@ export function fieldFor(header: string): Field | null {
   if (h.includes('website') || h.includes('portfolio') || h.includes('personal site')) return 'website'
   if (h.includes('headshot') || h.includes('photo') || h.includes('picture')) return null
   if (h.includes('major')) return 'major'
+  if (h.includes('semester') || h.includes('term')) return 'gradSemester'
   if (h.includes('grad') || h.includes('class of') || h === 'year') return 'gradYear'
+  if (h === 'bio' || h.includes('about you') || h.includes('short bio')) return 'bio'
   if (h.includes('role') || h.includes('position') || h === 'title') return 'role'
   if (h.includes('team')) return 'teams'
   if (h.includes('status')) return 'status'
@@ -129,7 +139,72 @@ function parseStatus(v: string): Parsed['status'] {
   return null
 }
 
+function parseSemester(v: string): string {
+  const t = norm(v)
+  if (t.includes('spring')) return 'Spring'
+  if (t.includes('summer')) return 'Summer'
+  if (t.includes('fall') || t.includes('autumn')) return 'Fall'
+  return ''
+}
+
 const key = () => Math.random().toString(36).slice(2, 12)
+
+const csvCell = (c: string) => (/[",\n\r]/.test(c) ? `"${c.replace(/"/g, '""')}"` : c)
+
+function downloadCsv(rows: string[][], filename: string) {
+  // The byte-order mark makes Excel open accented names correctly.
+  const csv = '\uFEFF' + rows.map((r) => r.map(csvCell).join(',')).join('\r\n')
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }))
+  a.download = filename
+  a.click()
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000)
+}
+
+/** Every member field, in the same order and wording the import understands. */
+const EXPORT_HEADERS = [
+  'Name',
+  'Teams',
+  'Role',
+  'Major',
+  'Graduation semester',
+  'Graduation year',
+  'LinkedIn',
+  'Website',
+  'GitHub',
+  'Email',
+  'Bio',
+  'Status',
+  'Leadership titles (read only)',
+  'Has headshot',
+  'Profile address',
+]
+
+type ExportRow = {
+  name?: string
+  slug?: string
+  status?: string
+  major?: string
+  gradSemester?: string
+  gradYear?: number
+  linkedin?: string
+  website?: string
+  github?: string
+  email?: string
+  bio?: string
+  hasPhoto?: boolean
+  teams?: { name?: string; role?: string }[]
+  leads?: { team?: string; titles?: string[] }[]
+}
+
+/** Matches a photo's file name to a person: "Jane Doe.jpg", "jane-doe.png", or Google Form's "photo - Jane Doe.jpg". */
+function fileMatchesName(file: File, name: string, slug?: string) {
+  const base = norm(file.name.replace(/\.[^.]+$/, ''))
+  const n = norm(name)
+  if (!n) return false
+  if (base === n || (slug && base === norm(slug))) return true
+  return ` ${base} `.includes(` ${n} `)
+}
 
 export function MemberImport() {
   const client = useClient({ apiVersion: '2025-09-01' })
@@ -172,10 +247,7 @@ export function MemberImport() {
     const photoFor = (name: string) => {
       const n = norm(name)
       if (!n) return null
-      const exact = photos.find((f) => norm(f.name.replace(/\.[^.]+$/, '')) === n)
-      if (exact) return exact
-      // Google Form uploads are named "<original file> - <Person Name>.jpg"
-      return photos.find((f) => ` ${norm(f.name.replace(/\.[^.]+$/, ''))} `.includes(` ${n} `)) ?? null
+      return photos.find((f) => norm(f.name.replace(/\.[^.]+$/, '')) === n) ?? photos.find((f) => fileMatchesName(f, name)) ?? null
     }
 
     const out: Parsed[] = table.slice(1).map((cells, i) => {
@@ -189,12 +261,16 @@ export function MemberImport() {
       if (!name) errors.push('Missing name')
       const slug = slugify(name)
       const teamIds: string[] = []
-      for (const part of get('teams').split(/[;,/\n]| and /i)) {
-        const p = part.trim()
+      const teamRoles: Record<string, string> = {}
+      // Roles in brackets are kept whole, so "VexU (Software, Build)" stays one entry.
+      for (const part of get('teams').split(/[;,/\n](?![^()]*\))| and (?![^()]*\))/i)) {
+        const m = part.trim().match(/^(.*?)\s*(?:\((.*)\))?$/)
+        const p = (m?.[1] ?? '').trim()
         if (!p) continue
         const id = teamLookup.get(norm(p)) ?? teamLookup.get(norm(p.replace(/\bteam\b/i, '')))
         if (id) {
           if (!teamIds.includes(id)) teamIds.push(id)
+          if (m?.[2]?.trim()) teamRoles[id] = m[2].trim()
         } else errors.push(`Unknown team "${p}"`)
       }
       const urls = (['linkedin', 'website', 'github'] as const).map((f) => {
@@ -203,6 +279,8 @@ export function MemberImport() {
         return r.url
       })
       const yearText = get('gradYear').match(/\d{4}/)?.[0]
+      // "Spring 2028" in the year column also sets the semester.
+      const gradSemester = parseSemester(get('gradSemester')) || parseSemester(get('gradYear'))
       const gradYear = yearText ? Number(yearText) : null
       if (get('gradYear') && !gradYear) errors.push('Graduation year should be a 4-digit year')
       const statusText = get('status')
@@ -213,9 +291,12 @@ export function MemberImport() {
         name,
         slug,
         teamIds,
+        teamRoles,
         role: get('role'),
         major: get('major'),
+        gradSemester,
         gradYear,
+        bio: get('bio'),
         linkedin: urls[0],
         website: urls[1],
         github: urls[2],
@@ -234,13 +315,81 @@ export function MemberImport() {
   const hasNameColumn = columns.includes('name')
 
   const downloadTemplate = () => {
-    const example = ['Jane Doe', 'AutoNav; Outreach', '', 'Computer Engineering', '2028', 'linkedin.com/in/janedoe', '', 'github.com/janedoe', 'jdoe@vt.edu', 'Active']
-    const csv = [TEMPLATE_HEADERS, example].map((r) => r.map((c) => (/[",\n]/.test(c) ? `"${c.replace(/"/g, '""')}"` : c)).join(',')).join('\n')
-    const a = document.createElement('a')
-    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }))
-    a.download = 'vtcro-members-template.csv'
-    a.click()
-    URL.revokeObjectURL(a.href)
+    const example = ['Jane Doe', 'AutoNav (Software Lead); Outreach', '', 'Computer Engineering', 'Spring', '2028', 'linkedin.com/in/janedoe', '', 'github.com/janedoe', 'jdoe@vt.edu', '', 'Active']
+    downloadCsv([TEMPLATE_HEADERS, example], 'vtcro-members-template.csv')
+  }
+
+  /* ───── Download every member ───── */
+  const [exporting, setExporting] = useState(false)
+  const downloadAll = async () => {
+    setExporting(true)
+    try {
+      const list = await client.fetch<ExportRow[]>(
+        `*[_type == "member" && !(_id in path("drafts.**"))] | order(name asc){
+          name, "slug": slug.current, status, major, gradSemester, gradYear, linkedin, website, github, email, bio,
+          "hasPhoto": defined(photo.asset),
+          "teams": teams[]{ "name": team->name, role },
+          "leads": *[_type == "team" && !(_id in path("drafts.**")) && ^._id in leadership[].member._ref]{ "team": name, "titles": leadership[member._ref == ^.^._id].title }
+        }`,
+      )
+      const status = (s?: string) => (s === 'alumni' ? 'Alumni' : s === 'inactive' ? 'Inactive' : 'Active')
+      const rows = list.map((m) => [
+        m.name ?? '',
+        (m.teams ?? []).filter((t) => t.name).map((t) => (t.role ? `${t.name} (${t.role})` : t.name!)).join('; '),
+        '',
+        m.major ?? '',
+        m.gradSemester ?? '',
+        m.gradYear ? String(m.gradYear) : '',
+        m.linkedin ?? '',
+        m.website ?? '',
+        m.github ?? '',
+        m.email ?? '',
+        m.bio ?? '',
+        status(m.status),
+        (m.leads ?? []).flatMap((l) => (l.titles ?? []).filter(Boolean).map((t) => `${t} (${l.team})`)).join('; '),
+        m.hasPhoto ? 'Yes' : 'No',
+        m.slug ? `vtcro.org/team/${m.slug}` : '',
+      ])
+      downloadCsv([EXPORT_HEADERS, ...rows], `vtcro-members-${new Date().toISOString().slice(0, 10)}.csv`)
+    } finally {
+      setExporting(false)
+    }
+  }
+
+  /* ───── Headshots only ───── */
+  const [headshots, setHeadshots] = useState<File[]>([])
+  const [shotStatus, setShotStatus] = useState<{ done: number; total: number; failed: string[]; finished: boolean } | null>(null)
+  const headshotInput = useRef<HTMLInputElement>(null)
+  const [withPhoto, setWithPhoto] = useState<Set<string>>(new Set())
+  useEffect(() => {
+    client.fetch<string[]>(`*[_type == "member" && !(_id in path("drafts.**")) && defined(photo.asset)]._id`).then((ids) => setWithPhoto(new Set(ids)))
+  }, [client, shotStatus?.finished])
+  const shotMatches = useMemo(
+    () =>
+      headshots.map((file) => {
+        const exact = members.filter((m) => norm(file.name.replace(/\.[^.]+$/, '')) === norm(m.name ?? '') || norm(file.name.replace(/\.[^.]+$/, '')) === norm(m.slug ?? ''))
+        const found = exact.length ? exact : members.filter((m) => fileMatchesName(file, m.name ?? '', m.slug))
+        return { file, member: found.length === 1 ? found[0] : null, ambiguous: found.length > 1 }
+      }),
+    [headshots, members],
+  )
+  const shotsReady = shotMatches.filter((s) => s.member)
+  const uploadHeadshots = async () => {
+    const failed: string[] = []
+    setShotStatus({ done: 0, total: shotsReady.length, failed, finished: false })
+    for (const [i, s] of shotsReady.entries()) {
+      try {
+        const asset = await client.assets.upload('image', s.file, { filename: s.file.name })
+        await client
+          .patch(s.member!._id)
+          .set({ photo: { _type: 'image', asset: { _type: 'reference', _ref: asset._id }, alt: s.member!.name } })
+          .commit()
+      } catch (e) {
+        failed.push(`${s.file.name}: ${e instanceof Error ? e.message : String(e)}`)
+      }
+      setShotStatus({ done: i + 1, total: shotsReady.length, failed, finished: false })
+    }
+    setShotStatus({ done: shotsReady.length, total: shotsReady.length, failed, finished: true })
   }
 
   const run = async () => {
@@ -256,6 +405,8 @@ export function MemberImport() {
         const set: Record<string, unknown> = { name: r.name }
         if (r.major) set.major = r.major
         if (r.gradYear) set.gradYear = r.gradYear
+        if (r.gradSemester) set.gradSemester = r.gradSemester
+        if (r.bio) set.bio = r.bio
         if (r.linkedin) set.linkedin = r.linkedin
         if (r.website) set.website = r.website
         if (r.github) set.github = r.github
@@ -264,10 +415,11 @@ export function MemberImport() {
         // Keep existing team entries; add the new ones.
         const merged = (r.existing?.teams ?? []).map((t) => ({ ...t }))
         for (const teamId of r.teamIds) {
+          const role = r.teamRoles[teamId] || r.role
           const found = merged.find((t) => t.team?._ref === teamId)
           if (found) {
-            if (r.role) found.role = r.role
-          } else merged.push({ _key: key(), team: { _ref: teamId }, ...(r.role ? { role: r.role } : {}) })
+            if (role) found.role = role
+          } else merged.push({ _key: key(), team: { _ref: teamId }, ...(role ? { role } : {}) })
         }
         if (r.teamIds.length) set.teams = merged.map((t) => ({ ...t, _type: 'membership', team: { _type: 'reference', _ref: t.team!._ref } }))
         if (r.photo) {
@@ -295,12 +447,109 @@ export function MemberImport() {
     <Box padding={4} style={{ height: '100%', overflow: 'auto' }}>
       <Stack gap={5} style={{ maxWidth: 960 }}>
         <Stack gap={3}>
-          <Heading size={2}>Import members from a spreadsheet</Heading>
+          <Heading size={2}>Members: spreadsheet & headshots</Heading>
           <Text size={1} muted>
-            Add or update many people at once. Imported members go live on the website straight away. People already in the dashboard are matched by name and updated;
-            nothing is deleted, and empty cells never erase existing details.
+            Download everyone as a spreadsheet, add or update many people at once, or upload a batch of headshots. Changes go live on the website straight away.
           </Text>
         </Stack>
+
+        <Card padding={4} radius={3} border>
+          <Stack gap={4}>
+            <Text weight="semibold">Download all members</Text>
+            <Text size={1} muted>
+              A .csv of every member (active, alumni and inactive) with every field, blanks included. It opens in Google Sheets or Excel, and uses the same columns as the
+              import below: edit it and import it back to update many people at once. Leadership titles, headshots and profile addresses are listed for reference only.
+            </Text>
+            <Flex>
+              <Button icon={DownloadIcon} tone="primary" text={exporting ? 'Preparing…' : 'Download all members (.csv)'} disabled={exporting} onClick={downloadAll} />
+            </Flex>
+          </Stack>
+        </Card>
+
+        <Card padding={4} radius={3} border>
+          <Stack gap={4}>
+            <Text weight="semibold">Upload headshots only</Text>
+            <Text size={1} muted>
+              Select many photos at once. Each is matched to a member by its file name: the person’s full name (“Jane Doe.jpg”) or profile address (“jane-doe.jpg”). Google
+              Form uploads (“photo - Jane Doe.jpg”) match too. A matched photo replaces that person’s current headshot.
+            </Text>
+            <Flex gap={2} wrap="wrap" align="center">
+              <Button icon={UploadIcon} mode="ghost" text="Choose headshots" onClick={() => headshotInput.current?.click()} />
+              {headshots.length > 0 && <Button mode="bleed" tone="critical" text="Clear" onClick={() => (setHeadshots([]), setShotStatus(null))} />}
+            </Flex>
+            <input
+              ref={headshotInput}
+              type="file"
+              accept="image/*"
+              multiple
+              style={{ display: 'none' }}
+              onChange={(e) => {
+                setHeadshots(Array.from(e.target.files ?? []))
+                setShotStatus(null)
+                e.target.value = ''
+              }}
+            />
+            {headshots.length > 0 && (
+              <>
+                <div style={{ overflowX: 'auto', maxHeight: 360 }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                    <thead>
+                      <tr style={{ textAlign: 'left' }}>
+                        {['Photo', 'Member', 'Result'].map((h) => (
+                          <th key={h} style={{ padding: '6px 8px', borderBottom: '1px solid var(--card-border-color)', fontWeight: 600 }}>
+                            {h}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {shotMatches.map((s) => (
+                        <tr key={s.file.name + s.file.size}>
+                          <td style={{ padding: '6px 8px' }}>{s.file.name}</td>
+                          <td style={{ padding: '6px 8px' }}>{s.member?.name ?? '—'}</td>
+                          <td style={{ padding: '6px 8px' }}>
+                            {s.member ? (
+                              withPhoto.has(s.member._id) ? (
+                                <Badge tone="caution">Replaces current headshot</Badge>
+                              ) : (
+                                <Badge tone="positive">New headshot</Badge>
+                              )
+                            ) : (
+                              <Badge tone="critical">{s.ambiguous ? 'Matches more than one member: rename the file' : 'No member with this name'}</Badge>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <Flex gap={3} align="center" wrap="wrap">
+                  <Button
+                    tone="primary"
+                    text={shotStatus && !shotStatus.finished ? 'Uploading…' : `Upload ${shotsReady.length} ${shotsReady.length === 1 ? 'headshot' : 'headshots'}`}
+                    disabled={!shotsReady.length || (!!shotStatus && !shotStatus.finished)}
+                    onClick={uploadHeadshots}
+                  />
+                  {shotStatus && (
+                    <Text size={1}>
+                      {shotStatus.finished ? `Done: ${shotStatus.done - shotStatus.failed.length} uploaded.` : `${shotStatus.done} of ${shotStatus.total}`}
+                    </Text>
+                  )}
+                </Flex>
+                {shotStatus?.failed.map((f) => (
+                  <Text key={f} size={1}>
+                    Not uploaded: {f}
+                  </Text>
+                ))}
+              </>
+            )}
+          </Stack>
+        </Card>
+
+        <Heading size={1}>Import from a spreadsheet</Heading>
+        <Text size={1} muted>
+          People already in the dashboard are matched by name and updated; nothing is deleted, and empty cells never erase existing details.
+        </Text>
 
         <Card padding={4} radius={3} border>
           <Stack gap={4}>
@@ -310,7 +559,8 @@ export function MemberImport() {
               questions like “Which team are you on?” work).
             </Text>
             <Text size={1} muted>
-              <b>Teams</b>: one or more team names or codes, separated by commas or semicolons. Current teams:{' '}
+              <b>Teams</b>: one or more team names or codes, separated by commas or semicolons, with an optional role in brackets, e.g. “AutoNav (Software Lead);
+              Outreach”. Current teams:{' '}
               {teams ? teams.map((t) => `${t.name}${t.code ? ` (${t.code})` : ''}`).join(', ') : 'loading…'}.
             </Text>
             <Text size={1} muted>

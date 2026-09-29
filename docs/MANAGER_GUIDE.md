@@ -17,7 +17,7 @@ You can keep the entire website up to date without touching code. Everything is 
 |---|---|
 | **Homepage** | Top photo, the line under the logo, About text, Core Principles, order of homepage sections |
 | **Teams** | Design Teams and Support Teams: every team page is generated from here |
-| **Members** | One entry per person: headshot, major, graduation year, teams, links. Also **Import from a spreadsheet** |
+| **Members** | One entry per person: headshot, major, graduation year, teams, links. Also **Spreadsheet & headshots** (download, bulk import, bulk headshots) |
 | **Events** | Events move from "Upcoming" to "Past" by themselves |
 | **Gallery (albums)** | Photo albums for the gallery |
 | **Awards** | Awards shown on the homepage and on team pages |
@@ -53,8 +53,20 @@ Open the team → **People** tab → **Team leadership** → add the person and 
 
 To see everyone on a team, open the team and click its **Members** tab (top of the form). To see every team a person is on, open the person and click **Appears on**.
 
+### Download everyone as a spreadsheet
+**Members → Spreadsheet & headshots → Download all members (.csv).** You get every member (active, alumni and inactive) with every field, blanks included. It uses the same columns as the import, so you can edit it in Google Sheets and import it back. Teams are listed like `AutoNav (Software Lead); Outreach`. Leadership titles, "Has headshot" and profile addresses are for reference and are ignored on import.
+
+### Upload many headshots at once
+**Members → Spreadsheet & headshots → Upload headshots only.**
+1. Name each photo after the person: `Jane Doe.jpg` (full name as in the dashboard) or `jane-doe.jpg` (their profile address). Photos from a Google Form file-upload question (`photo - Jane Doe.jpg`) already match.
+2. Click **Choose headshots** and select them all at once.
+3. Check the list: each photo shows who it matched, whether it's new or replaces a current headshot, or why it didn't match.
+4. Click **Upload**. They appear on the website within a minute.
+
+Tip: after uploading, open anyone whose face is off-center and drag the crop circle onto their face.
+
 ### Add many people at once (spreadsheet import)
-**Members → Import from a spreadsheet.**
+**Members → Spreadsheet & headshots → Import from a spreadsheet.**
 
 1. Click **Download a blank template**, or use your own Google Sheet, Excel file or Google Form responses. Only a **Name** column is required. Other recognized columns are *Teams, Role, Major, Graduation year, LinkedIn, Website, GitHub, Email, Status*. Column headers can be worded freely, so Google Form questions work as they are.
 2. **Teams**: team names or codes separated by commas, e.g. `AutoNav, Outreach` or `NAV; VEX`.

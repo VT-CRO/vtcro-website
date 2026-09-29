@@ -86,10 +86,10 @@ export const structure = (S: StructureBuilder, context: ConfigContext) =>
               S.documentTypeListItem('member').title('Everyone'),
               S.divider(),
               S.listItem()
-                .title('Import from a spreadsheet')
+                .title('Spreadsheet & headshots')
                 .id('member-import')
                 .icon(UploadIcon)
-                .child(S.component(MemberImport).id('member-import').title('Import members from a spreadsheet')),
+                .child(S.component(MemberImport).id('member-import').title('Members: spreadsheet & headshots')),
             ]),
         ),
 
