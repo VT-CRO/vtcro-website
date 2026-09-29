@@ -14,7 +14,8 @@ export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Events',
-  description: 'Upcoming and past VT CRO events, competitions, and outreach.',
+  description:
+    'Upcoming and past VT CRO events at Virginia Tech, including the CRO-Down VEX robotics competition, the CRO Expo design team showcase, workshops and outreach.',
   alternates: { canonical: '/events' },
 }
 

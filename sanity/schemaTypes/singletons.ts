@@ -18,7 +18,15 @@ export const siteSettings = defineType({
       title: 'Short description',
       type: 'text',
       rows: 3,
-      description: 'Used in the footer and as the default description for search engines and link previews.',
+      description: 'The line in the footer.',
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'Search description (homepage)',
+      type: 'text',
+      rows: 3,
+      description: 'The text under "VT CRO" in Google results and link previews. Aim for 140–160 characters and mention Virginia Tech and robotics.',
+      validation: (r) => r.max(170).warning('Google cuts off descriptions longer than about 160 characters.'),
     }),
     imageField('shareImage', 'Default link-preview image', {
       description: 'Shown when a page is shared on social media or messaging apps. Leave empty to use the VT CRO logo. Landscape, at least 1200×630.',

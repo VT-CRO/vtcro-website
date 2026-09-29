@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { permanentRedirect } from 'next/navigation'
 import { ArrowLeft, ArrowUpRight, BookIcon, GitHubIcon, GlobeIcon, GraduationIcon, LinkedInIcon } from '@/components/icons'
 import { PeopleGrid } from '@/components/people/PeopleGrid'
 import { Media } from '@/components/ui/Media'
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     .join(' · ')
   return {
     title: member.name,
-    description: `${member.name}: ${description}. VT CRO member.`,
+    description: `${member.name}${description ? `, ${description}` : ''}. Member of VT CRO, the Competitive Robotics Organization at Virginia Tech.`,
     alternates: { canonical: `/team/${member.slug}` },
     // Sample profiles shouldn't be indexed.
     robots: member.isPlaceholder ? { index: false } : undefined,
@@ -36,7 +36,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function MemberPage({ params }: { params: Promise<{ slug: string }> }) {
   const member = await getMember((await params).slug)
-  if (!member) notFound()
+  // Old profile links (e.g. former members from the previous website) go to the Team page
+  // instead of a dead end, which keeps their search ranking pointing at the site.
+  if (!member) permanentRedirect('/team')
 
   const primary = member.roles[0]
   // Teammates come from the person's first design team (or their only team).

@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const site = await getSite()
   return {
     title: { default: `${site.shortName} · ${site.name}`, template: `%s · ${site.shortName}` },
-    description: plain(site.description),
+    description: site.seoDescription || plain(site.description),
     openGraph: {
       type: 'website',
       siteName: site.shortName,

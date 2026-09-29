@@ -6,10 +6,15 @@ import { getTeams } from '@/lib/content'
 
 export const revalidate = 3600
 
-export const metadata: Metadata = {
-  title: 'Teams',
-  description: 'VT CRO design teams and support teams.',
-  alternates: { canonical: '/teams' },
+export async function generateMetadata(): Promise<Metadata> {
+  const [design, support] = await Promise.all([getTeams('design'), getTeams('support')])
+  const names = design.map((t) => t.name)
+  const list = names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names.at(-1)}` : names.join('')
+  return {
+    title: 'Robotics Design Teams',
+    description: `VT CRO's robotics design teams at Virginia Tech: ${list}, supported by ${support.length} support teams.`,
+    alternates: { canonical: '/teams' },
+  }
 }
 
 export default async function TeamsPage() {

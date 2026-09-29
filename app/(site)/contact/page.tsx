@@ -11,7 +11,8 @@ export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Get in touch with VT CRO for general questions, sponsorship, and outreach.',
+  description:
+    'Contact VT CRO, the Competitive Robotics Organization at Virginia Tech, about joining, sponsorship, outreach and events in Blacksburg, Virginia.',
   alternates: { canonical: '/contact' },
 }
 

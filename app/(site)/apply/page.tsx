@@ -13,7 +13,8 @@ export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Apply',
-  description: 'How to join VT CRO: application status, who can apply, and how recruitment works.',
+  description:
+    'Join VT CRO, the Competitive Robotics Organization at Virginia Tech. See who can apply, how recruitment works, and when applications open each September.',
   alternates: { canonical: '/apply' },
 }
 

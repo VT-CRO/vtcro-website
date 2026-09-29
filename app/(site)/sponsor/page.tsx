@@ -14,7 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getSponsorsPage()
   return {
     title: 'Sponsor',
-    description: page.intro || 'Sponsor VT CRO, the Competitive Robotics Organization at Virginia Tech.',
+    description:
+      'Sponsor VT CRO, the largest robotics design team organization at Virginia Tech. Reach top engineering talent through resume access, info sessions and our events.',
     alternates: { canonical: '/sponsor' },
   }
 }

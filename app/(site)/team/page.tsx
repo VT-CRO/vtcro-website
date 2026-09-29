@@ -7,7 +7,8 @@ export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Team',
-  description: 'Meet the engineers and leaders of VT CRO.',
+  description:
+    'Meet the engineers of VT CRO, the Competitive Robotics Organization at Virginia Tech: the executive team, engineering team and support team behind our robots.',
   alternates: { canonical: '/team' },
 }
 

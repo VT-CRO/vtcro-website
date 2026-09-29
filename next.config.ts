@@ -27,6 +27,18 @@ const nextConfig: NextConfig = {
       { source: '/photos', destination: '/gallery', permanent: true },
       { source: '/photos/:album', destination: '/gallery/:album', permanent: true },
       { source: '/sponsor-us', destination: '/sponsor', permanent: true },
+      // Other pages from the Webflow site.
+      { source: '/book-interview', destination: '/apply', permanent: true },
+      { source: '/stories/southeastcon-2023-seniors', destination: '/teams/southeastcon', permanent: true },
+      { source: '/stories/:slug', destination: '/', permanent: true },
+      ...['/log-in', '/sign-up', '/reset-password', '/update-password', '/access-denied', '/user-account'].map((source) => ({
+        source,
+        destination: '/',
+        permanent: true,
+      })),
+      // Not permanent until we know where these should go.
+      { source: '/ceed', destination: '/', permanent: false },
+      { source: '/lab-waiver', destination: '/', permanent: false },
       { source: '/sponsors', destination: '/sponsor', permanent: true },
       { source: '/vex-competition', destination: '/events', permanent: true },
     ]

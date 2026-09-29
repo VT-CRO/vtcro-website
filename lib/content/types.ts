@@ -26,6 +26,7 @@ export type Site = {
   name: string
   shortName: string
   description: string
+  seoDescription: string
   shareImage: Img | null
   footerTagline: string
   copyrightName: string

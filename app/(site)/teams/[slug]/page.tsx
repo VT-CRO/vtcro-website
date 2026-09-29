@@ -26,9 +26,12 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const team = await getTeam((await params).slug)
   if (!team) return {}
-  const description = team.seo.description || team.shortDescription
+  const description =
+    team.seo.description ||
+    `${team.name} is a VT CRO ${team.type === 'design' ? 'robotics design' : 'support'} team at Virginia Tech. ${team.shortDescription}`.trim()
+  const title = team.seo.title || (team.type === 'design' ? `${team.name} · Robotics Design Team` : `${team.name} Team`)
   return {
-    title: team.seo.title || team.name,
+    title,
     description,
     alternates: { canonical: `/teams/${team.slug}` },
     openGraph: {

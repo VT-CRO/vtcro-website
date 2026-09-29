@@ -80,6 +80,7 @@ export const getSite = cache(async (): Promise<Site> => {
     name: str(s.organizationName) || 'Competitive Robotics Organization at Virginia Tech',
     shortName: str(s.shortName) || 'VT CRO',
     description: str(s.description),
+    seoDescription: str(s.seoDescription),
     shareImage: toImg(s.shareImage),
     footerTagline: str(s.footerTagline),
     copyrightName: str(s.copyrightName) || str(s.organizationName),

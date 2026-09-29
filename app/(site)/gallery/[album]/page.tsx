@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ album: st
   if (!album) return {}
   return {
     title: album.title,
-    description: album.description || `Photos from VT CRO.`,
+    description: album.description || `Photos from ${album.title}, from VT CRO, the Competitive Robotics Organization at Virginia Tech.`,
     alternates: { canonical: `/gallery/${album.slug}` },
     openGraph: { images: album.cover ? [{ url: album.cover.src, alt: album.cover.alt }] : [DEFAULT_SHARE_IMAGE] },
   }
