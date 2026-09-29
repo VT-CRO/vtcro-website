@@ -52,3 +52,8 @@
   mask: none;
   filter: drop-shadow(0 0 14px rgb(255 255 255 / 0.16)) drop-shadow(0 10px 12px rgb(0 0 0 / 0.9));
 }
+/* On light sections (e.g. the people on team pages) the bird is shown in black. */
+:global(.theme-light) .compact .mark {
+  background-image: url('/brand/mark-black.png');
+  filter: drop-shadow(0 8px 10px rgb(0 0 0 / 0.12));
+}
