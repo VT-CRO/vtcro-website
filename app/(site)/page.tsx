@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { AwardLedger } from '@/components/awards/AwardLedger'
 import { EventCard } from '@/components/events/EventCard'
@@ -14,6 +15,9 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { getAwards, getEvents, getHome, getProjects, getRecruitment, getSite, getSponsorGroups, getTeams, type HomeSection } from '@/lib/content'
 import { siteUrl } from '@/lib/format'
 import { ComingSoon } from '@/components/ui/ComingSoon'
+
+// The homepage's own address, so search engines treat vtcro.org and www.vtcro.org as one page.
+export const metadata: Metadata = { alternates: { canonical: '/' } }
 
 export const revalidate = 3600
 
