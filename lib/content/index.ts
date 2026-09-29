@@ -136,6 +136,8 @@ function memberSummary(d: RawDoc): MemberSummary {
     photo: toImg(d.photo, str(d.name)),
     major: str(d.major),
     gradYear: typeof d.gradYear === 'number' ? d.gradYear : null,
+    gradTerm: typeof d.gradYear === 'number' ? [str(d.gradSemester), d.gradYear].filter(Boolean).join(' ') : '',
+    email: str(d.email),
     linkedin: url(d.linkedin),
     website: url(d.website),
     github: url(d.github),
@@ -145,8 +147,9 @@ function memberSummary(d: RawDoc): MemberSummary {
 
 const isActiveMember = (d: RawDoc | undefined): d is RawDoc => Boolean(d && d._type === 'member' && (d.status ?? 'active') === 'active')
 
-function defaultRole(team: TeamSummary) {
-  return team.type === 'design' ? `${team.name} Engineer` : `${team.name} Member`
+/** People without a title just show their team name, so there is no invented default title. */
+function defaultRole(_team: TeamSummary) {
+  return ''
 }
 
 /** Leaders (ordered on the team) + members (who list the team on their own form), active only, no duplicates. */

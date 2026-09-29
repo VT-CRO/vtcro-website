@@ -50,17 +50,23 @@
 .large .name {
   font-size: 1.125rem;
 }
-@media (hover: hover) {
-  .card:hover .img {
-    transform: scale(1.04);
-  }
-  .card:hover .name {
-    color: var(--accent-text);
-  }
-  .card:hover .photo {
-    transform: translateY(-4px);
-    box-shadow:
-      0 0 0 1px rgb(255 255 255 / 0.15),
-      0 24px 50px -24px rgb(0 0 0 / 0.45);
-  }
+.links {
+  display: flex;
+  gap: 4px;
+  margin: 6px 0 0 -6px;
+  list-style: none;
+  padding: 0;
+}
+.links a {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--text-3);
+  transition: color var(--dur-2) var(--ease);
+}
+.links a:hover,
+.links a:focus-visible {
+  color: var(--text);
 }

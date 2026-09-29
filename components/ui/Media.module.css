@@ -41,6 +41,14 @@
   color: var(--accent);
   opacity: 0.85;
 }
+.compact {
+  background: radial-gradient(farthest-corner at 50% 50%, rgb(255 255 255 / 0.085), transparent 100%), var(--surface-2);
+}
 .compact .mark {
   width: 56%;
+  opacity: 1;
+  background: url('/brand/mark-white.png') center / contain no-repeat;
+  -webkit-mask: none;
+  mask: none;
+  filter: drop-shadow(0 0 14px rgb(255 255 255 / 0.16)) drop-shadow(0 10px 12px rgb(0 0 0 / 0.9));
 }

@@ -89,6 +89,9 @@ export type MemberSummary = {
   photo: Img | null
   major: string
   gradYear: number | null
+  /** e.g. "Spring 2027" (or just "2027" when no semester is set). */
+  gradTerm: string
+  email: string
   linkedin: string | null
   website: string | null
   github: string | null

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const member = await getMember((await params).slug)
   if (!member) return {}
   const role = member.roles[0]
-  const description = [role ? `${role.role}, ${role.team.name}` : null, member.major, member.gradYear ? `Class of ${member.gradYear}` : null]
+  const description = [role ? [role.role, role.team.name].filter(Boolean).join(', ') : null, member.major, member.gradYear ? `Class of ${member.gradYear}` : null]
     .filter(Boolean)
     .join(' · ')
   return {
@@ -70,7 +70,7 @@ export default async function MemberPage({ params }: { params: Promise<{ slug: s
           <div className={styles.info}>
             <p className="t-label">{primary?.team.name ?? 'VT CRO'}</p>
             <h1 className={`t-h1 ${styles.name}`}>{member.name}</h1>
-            {primary && <p className={styles.role}>{primary.role}</p>}
+            {primary?.role && <p className={styles.role}>{primary.role}</p>}
 
             {facts.length > 0 && (
               <dl className={styles.facts}>

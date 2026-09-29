@@ -1,29 +1,48 @@
-import Link from 'next/link'
+import { GitHubIcon, GlobeIcon, LinkedInIcon, MailIcon } from '@/components/icons'
 import { Media } from '@/components/ui/Media'
 import type { MemberSummary, TeamSummary } from '@/lib/content'
 import styles from './MemberCard.module.css'
 
 type Props = {
   member: MemberSummary
+  /** Title such as "President". Empty for regular members, who show their team instead. */
   role: string
   teams?: TeamSummary[]
   large?: boolean
   index?: number
 }
 
-/** Portrait card linking to the member's profile. Shared by team pages and the Team page. */
-export function MemberCard({ member, role, teams = [], large, index = 0 }: Props) {
-  const meta = [teams.map((t) => t.code || t.name).join(' / '), member.gradYear ? `’${String(member.gradYear).slice(-2)}` : null].filter(Boolean)
+/** Portrait card: name, title or team, graduation, and contact links. Shared by team pages and the Team page. */
+export function MemberCard({ member, role, teams = [], large }: Props) {
+  const line = role || teams.map((t) => t.name).join(' / ')
+  const links = [
+    member.email && { href: `mailto:${member.email}`, label: `Email ${member.name}`, icon: MailIcon, external: false },
+    member.linkedin && { href: member.linkedin, label: `${member.name} on LinkedIn`, icon: LinkedInIcon, external: true },
+    member.website && { href: member.website, label: `${member.name}’s website`, icon: GlobeIcon, external: true },
+    member.github && { href: member.github, label: `${member.name} on GitHub`, icon: GitHubIcon, external: true },
+  ].filter(Boolean) as { href: string; label: string; icon: typeof MailIcon; external: boolean }[]
+
   return (
-    <Link href={`/team/${member.slug}`} className={`${styles.card} ${large ? styles.large : ''}`}>
+    <div className={`${styles.card} ${large ? styles.large : ''}`}>
       <div className={styles.photo}>
-        <Media img={member.photo} placeholder="Headshot" sizes={large ? '(min-width: 1100px) 22vw, 45vw' : '(min-width: 1100px) 18vw, (min-width: 700px) 30vw, 45vw'} className={styles.img} />
+        <Media img={member.photo} placeholder="Headshot" bare sizes={large ? '(min-width: 1100px) 22vw, 45vw' : '(min-width: 1100px) 18vw, (min-width: 700px) 30vw, 45vw'} className={styles.img} />
       </div>
       <div className={styles.text}>
         <p className={styles.name}>{member.name}</p>
-        <p className={styles.role}>{role}</p>
-        {meta.length > 0 && <p className={styles.meta}>{meta.join('  ·  ')}</p>}
+        {line && <p className={styles.role}>{line}</p>}
+        {member.gradTerm && <p className={styles.meta}>{member.gradTerm}</p>}
+        {links.length > 0 && (
+          <ul className={styles.links}>
+            {links.map((l) => (
+              <li key={l.href}>
+                <a href={l.href} aria-label={l.label} {...(l.external ? { target: '_blank', rel: 'noreferrer' } : {})}>
+                  <l.icon size={17} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-    </Link>
+    </div>
   )
 }

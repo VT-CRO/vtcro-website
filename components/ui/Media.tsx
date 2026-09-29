@@ -12,6 +12,8 @@ type Props = {
   preload?: boolean
   /** Fit inside the frame instead of cropping (for logos). */
   contain?: boolean
+  /** Placeholder shows only the bird mark, with no "Placeholder" caption. */
+  bare?: boolean
   style?: CSSProperties
 }
 
@@ -20,8 +22,8 @@ type Props = {
  * If the image hasn't been provided yet, renders a clearly labeled placeholder instead,
  * so layouts never break while assets are missing.
  */
-export function Media({ img, placeholder, sizes, className, preload, contain, style }: Props) {
-  if (!img) return <Placeholder label={placeholder} className={className} style={style} />
+export function Media({ img, placeholder, sizes, className, preload, contain, bare, style }: Props) {
+  if (!img) return <Placeholder label={placeholder} className={className} style={style} compact={bare} />
   return (
     <Image
       src={img.src}
