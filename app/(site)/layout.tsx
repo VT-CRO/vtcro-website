@@ -40,6 +40,7 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
         nav={NAV}
         github={site.github}
         instagram={site.instagram}
+        linkedin={site.linkedin}
         teams={navTeams}
       />
       <main id="main" tabIndex={-1}>

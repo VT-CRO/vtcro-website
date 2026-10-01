@@ -40,6 +40,7 @@ export type Site = {
   socials: SocialLink[]
   github: string | null
   instagram: string | null
+  linkedin: string | null
 }
 
 export type HomeSectionKey =

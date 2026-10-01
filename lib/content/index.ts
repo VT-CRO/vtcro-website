@@ -96,6 +96,7 @@ export const getSite = cache(async (): Promise<Site> => {
     socials,
     github: url(c.githubUrl),
     instagram: url(c.instagramUrl),
+    linkedin: url(c.linkedinUrl),
   }
 })
 

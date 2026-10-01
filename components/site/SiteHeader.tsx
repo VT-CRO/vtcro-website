@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { ArrowRight, CloseIcon, GitHubIcon, InstagramIcon } from '@/components/icons'
+import { ArrowRight, CloseIcon, GitHubIcon, InstagramIcon, LinkedInIcon } from '@/components/icons'
 import styles from './SiteHeader.module.css'
 
 export type NavTeam = { slug: string; name: string; code: string; logo: { src: string; alt: string } | null }
@@ -13,10 +13,11 @@ type Props = {
   nav: { href: string; label: string; icon?: string }[]
   github: string | null
   instagram: string | null
+  linkedin: string | null
   teams: NavTeam[]
 }
 
-export function SiteHeader({ nav, github, instagram, teams }: Props) {
+export function SiteHeader({ nav, github, instagram, linkedin, teams }: Props) {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -92,6 +93,11 @@ export function SiteHeader({ nav, github, instagram, teams }: Props) {
                 <InstagramIcon size={17} />
               </a>
             )}
+            {linkedin && (
+              <a href={linkedin} className={styles.iconLink} target="_blank" rel="noreferrer" aria-label="VT CRO on LinkedIn">
+                <LinkedInIcon size={17} />
+              </a>
+            )}
             <button
               type="button"
               className={styles.menuButton}
@@ -116,6 +122,7 @@ export function SiteHeader({ nav, github, instagram, teams }: Props) {
         isActive={isActive}
         github={github}
         instagram={instagram}
+        linkedin={linkedin}
         teams={teams}
       />
     </>
@@ -129,6 +136,7 @@ function MobileMenu({
   isActive,
   github,
   instagram,
+  linkedin,
   teams,
 }: Omit<Props, never> & { open: boolean; onClose: () => void; isActive: (href: string) => boolean }) {
   const panel = useRef<HTMLDivElement>(null)

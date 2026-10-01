@@ -3,11 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { permanentRedirect } from 'next/navigation'
 import { ArrowLeft, ArrowUpRight, BookIcon, GitHubIcon, GlobeIcon, GraduationIcon, LinkedInIcon } from '@/components/icons'
-import { PeopleGrid } from '@/components/people/PeopleGrid'
 import { Media } from '@/components/ui/Media'
-import { Section } from '@/components/ui/Section'
-import { SectionHeader } from '@/components/ui/SectionHeader'
-import { getMember, getMembers, getTeam } from '@/lib/content'
+import { getMember, getMembers } from '@/lib/content'
 import styles from './page.module.css'
 import { DEFAULT_SHARE_IMAGE } from '@/lib/format'
 
@@ -41,10 +38,6 @@ export default async function MemberPage({ params }: { params: Promise<{ slug: s
   if (!member) permanentRedirect('/team')
 
   const primary = member.roles[0]
-  // Teammates come from the person's first design team (or their only team).
-  const home = member.roles.find((r) => r.team.type === 'design') ?? member.roles[0]
-  const team = home ? await getTeam(home.team.slug) : null
-  const teammates = team ? [...team.leadership, ...team.roster].filter((p) => p.member.id !== member.id).slice(0, 5) : []
 
   const links = [
     member.linkedin && { href: member.linkedin, label: 'LinkedIn', icon: LinkedInIcon },
@@ -123,13 +116,6 @@ export default async function MemberPage({ params }: { params: Promise<{ slug: s
           </div>
         </div>
       </div>
-
-      {teammates.length > 0 && team && (
-        <Section tone="light" labelledBy="teammates">
-          <SectionHeader heading={`${team.name} teammates`} id="teammates" />
-          <PeopleGrid people={teammates} dense />
-        </Section>
-      )}
     </article>
   )
 }

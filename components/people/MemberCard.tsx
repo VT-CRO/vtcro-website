@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { GitHubIcon, GlobeIcon, LinkedInIcon, MailIcon } from '@/components/icons'
 import { Media } from '@/components/ui/Media'
 import type { MemberSummary, TeamSummary } from '@/lib/content'
@@ -24,11 +25,13 @@ export function MemberCard({ member, role, teams = [], large }: Props) {
 
   return (
     <div className={`${styles.card} ${large ? styles.large : ''}`}>
-      <div className={styles.photo}>
+      <Link href={`/team/${member.slug}`} className={styles.photo} aria-label={`${member.name}’s page`} tabIndex={-1}>
         <Media img={member.photo} placeholder="Headshot" bare sizes={large ? '(min-width: 1100px) 22vw, 45vw' : '(min-width: 1100px) 18vw, (min-width: 700px) 30vw, 45vw'} className={styles.img} />
-      </div>
+      </Link>
       <div className={styles.text}>
-        <p className={styles.name}>{member.name}</p>
+        <p className={styles.name}>
+          <Link href={`/team/${member.slug}`}>{member.name}</Link>
+        </p>
         {line && <p className={styles.role}>{line}</p>}
         {member.gradTerm && <p className={styles.meta}>{member.gradTerm}</p>}
         {links.length > 0 && (
