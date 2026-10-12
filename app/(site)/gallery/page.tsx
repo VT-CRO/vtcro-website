@@ -4,7 +4,7 @@ import { Section } from '@/components/ui/Section'
 import { getPhotos } from '@/lib/content'
 import { ComingSoon } from '@/components/ui/ComingSoon'
 
-export const revalidate = 3600
+export const revalidate = false
 
 export const metadata: Metadata = {
   title: 'Gallery',

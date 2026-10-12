@@ -19,7 +19,7 @@ import { ComingSoon } from '@/components/ui/ComingSoon'
 // The homepage's own address, so search engines treat vtcro.org and www.vtcro.org as one page.
 export const metadata: Metadata = { alternates: { canonical: '/' } }
 
-export const revalidate = 3600
+export const revalidate = false
 
 export default async function HomePage() {
   const [home, site, design, support, awards, projects, events, sponsors, recruitment] = await Promise.all([

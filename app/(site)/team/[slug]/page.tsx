@@ -8,7 +8,7 @@ import { getMember, getMembers } from '@/lib/content'
 import styles from './page.module.css'
 import { DEFAULT_SHARE_IMAGE } from '@/lib/format'
 
-export const revalidate = 3600
+export const revalidate = false
 
 export async function generateStaticParams() {
   return (await getMembers()).map((m) => ({ slug: m.slug }))

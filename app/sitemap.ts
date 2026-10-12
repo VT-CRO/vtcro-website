@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getAlbums, getEvents, getTeams } from '@/lib/content'
 import { siteUrl } from '@/lib/format'
 
-export const revalidate = 3600
+export const revalidate = false
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [teams, { all: events }, albums] = await Promise.all([getTeams(), getEvents(), getAlbums()])

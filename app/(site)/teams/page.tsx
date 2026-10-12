@@ -4,7 +4,7 @@ import { Section } from '@/components/ui/Section'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { getTeams } from '@/lib/content'
 
-export const revalidate = 3600
+export const revalidate = false
 
 export async function generateMetadata(): Promise<Metadata> {
   const [design, support] = await Promise.all([getTeams('design'), getTeams('support')])

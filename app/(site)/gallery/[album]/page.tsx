@@ -8,7 +8,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { getAlbum, getAlbums } from '@/lib/content'
 import { DEFAULT_SHARE_IMAGE } from '@/lib/format'
 
-export const revalidate = 3600
+export const revalidate = false
 
 export async function generateStaticParams() {
   return (await getAlbums()).map((a) => ({ album: a.slug }))

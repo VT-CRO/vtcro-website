@@ -9,7 +9,7 @@ import { getRecruitment } from '@/lib/content'
 import { formatDate } from '@/lib/format'
 import styles from './page.module.css'
 
-export const revalidate = 3600
+export const revalidate = false
 
 export const metadata: Metadata = {
   title: 'Apply',

@@ -75,7 +75,7 @@ Pages are pre-built and cached (fast), then refreshed when content changes:
    | Secret | the same value as `SANITY_REVALIDATE_SECRET` |
    | HTTP method | POST |
 
-Without the webhook, changes still appear automatically within about an hour.
+Without the webhook, changes will NOT appear until the next deploy (there is no hourly timer, to limit Vercel ISR writes).
 
 ## 6. Contact form email
 

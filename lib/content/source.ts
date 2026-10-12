@@ -33,7 +33,7 @@ export type RawDoc = { _id: string; _type: string; [key: string]: any }
 /**
  * Loads all published content in a single request. The site is small enough
  * that this is faster and simpler than many per-page queries. Results are cached
- * and refreshed when the Sanity webhook calls /api/revalidate, or hourly at most.
+ * and refreshed when the Sanity webhook calls /api/revalidate, only (no timer, to limit Vercel ISR writes).
  *
  * Until Sanity is connected (see .env.example) the built-in sample content is used.
  */
@@ -43,8 +43,8 @@ export const getDocuments = cache(async (): Promise<RawDoc[]> => {
     `*[_type in $types && !(_id in path("drafts.**"))]`,
     { types: TYPES },
     // Local development always shows the latest published content (the publish webhook
-    // can't reach a laptop). The live site caches and refreshes on publish, or hourly at most.
-    process.env.NODE_ENV === 'development' ? { cache: 'no-store' } : { next: { tags: [SANITY_CACHE_TAG], revalidate: 3600 } },
+    // can't reach a laptop). The live site caches and refreshes on publish, only (no timer, to limit Vercel ISR writes).
+    process.env.NODE_ENV === 'development' ? { cache: 'no-store' } : { next: { tags: [SANITY_CACHE_TAG] } },
   )
 })
 

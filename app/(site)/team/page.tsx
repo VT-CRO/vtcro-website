@@ -3,7 +3,7 @@ import { PeopleDirectory } from '@/components/people/PeopleDirectory'
 import { Section } from '@/components/ui/Section'
 import { getPeopleDirectory } from '@/lib/content'
 
-export const revalidate = 3600
+export const revalidate = false
 
 export const metadata: Metadata = {
   title: 'Team',

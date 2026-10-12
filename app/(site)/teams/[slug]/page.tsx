@@ -17,7 +17,7 @@ import styles from './page.module.css'
 import { DEFAULT_SHARE_IMAGE } from '@/lib/format'
 import { ComingSoon } from '@/components/ui/ComingSoon'
 
-export const revalidate = 3600
+export const revalidate = false
 
 export async function generateStaticParams() {
   return (await getTeams()).map((t) => ({ slug: t.slug }))

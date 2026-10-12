@@ -11,7 +11,7 @@ import { getEvent, getEvents } from '@/lib/content'
 import { dateParts, eventWhen, DEFAULT_SHARE_IMAGE } from '@/lib/format'
 import styles from './page.module.css'
 
-export const revalidate = 3600
+export const revalidate = false
 
 export async function generateStaticParams() {
   return (await getEvents()).all.map((e) => ({ slug: e.slug }))

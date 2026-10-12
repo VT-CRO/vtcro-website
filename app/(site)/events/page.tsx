@@ -10,7 +10,7 @@ import styles from './page.module.css'
 import { ComingSoon } from '@/components/ui/ComingSoon'
 
 // Events move from Upcoming to Past on their own; refresh at least hourly.
-export const revalidate = 3600
+export const revalidate = false
 
 export const metadata: Metadata = {
   title: 'Events',

@@ -1,7 +1,7 @@
 import { getEvent } from '@/lib/content'
 import { siteUrl } from '@/lib/format'
 
-export const revalidate = 3600
+export const revalidate = false
 
 const stamp = (iso: string) => new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
 const esc = (s: string) => s.replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\;')

@@ -7,7 +7,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { getSite } from '@/lib/content'
 import styles from './page.module.css'
 
-export const revalidate = 3600
+export const revalidate = false
 
 export const metadata: Metadata = {
   title: 'Contact',

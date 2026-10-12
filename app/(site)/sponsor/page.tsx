@@ -8,7 +8,7 @@ import { getAwards, getPeopleDirectory, getSite, getSponsorGroups, getSponsorsPa
 import { Inline } from '@/lib/text'
 import styles from './page.module.css'
 
-export const revalidate = 3600
+export const revalidate = false
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getSponsorsPage()
