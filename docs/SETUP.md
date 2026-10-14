@@ -114,12 +114,13 @@ app/(site)/            Pages. One file per route; team/event/member/album pages 
 app/studio             The CMS dashboard at /studio
 app/api/revalidate     Webhook that refreshes the site after Publish
 components/            Reusable UI (TeamCard, MemberCard, AwardLedger, PhotoGrid, Lightbox, …)
+components/ui/         shadcn/ui primitives (button, card, badge, input, …) styled to the site's design
 lib/content/           The data layer. Pages only call functions from lib/content/index.ts
   source.ts            Loads all published content (Sanity, or the sample seed when not connected)
   index.ts             Resolves relationships (team ↔ members ↔ awards ↔ photos ↔ events)
 sanity/                CMS schema (the forms) and dashboard layout (structure.ts)
 seed/                  Starting content + image sizes; scripts/build-seed.ts turns it into an import file
-app/globals.css        Design tokens: colors, type scale, spacing, buttons, motion
+app/globals.css        Tailwind setup and design tokens: colors, type scale, spacing, motion
 ```
 
 **Adding a new kind of content** means:
@@ -130,6 +131,10 @@ app/globals.css        Design tokens: colors, type scale, spacing, buttons, moti
 4. Render it in a component.
 
 **Design system:**
-- Colors, type and spacing are CSS variables at the top of `app/globals.css`.
-- The accent blue is `--accent`, with `--accent-strong` used for filled buttons.
+- Styling is [Tailwind CSS](https://tailwindcss.com) v4: components carry utility classes, there are no per-component stylesheets.
+- Colors, type and spacing are CSS variables at the top of `app/globals.css`, exposed to Tailwind as `bg-background`, `text-fg`, `text-fg-2`, `border-line`, `bg-surface-2`, etc. Light sections (`.theme-light`) swap the variables, so these classes adapt automatically.
+- Shared building blocks (`Button`, `Card`, `Badge`, `Input`, `Textarea`, `NativeSelect`, `Label`, `IconBadge`, `StatusDot`) are [shadcn/ui](https://ui.shadcn.com) components in `components/ui/`. Add more with `npx shadcn@latest add <name>` and restyle them to match.
+- Text styles (`t-h1`, `t-lead`, `t-label`, …) and rich-text `prose` are defined in `app/globals.css`.
+- `hover:` applies on every device; use `hoverable:hover:` for effects that should only run with a real mouse.
+- The accent is `--accent` (white on dark sections, near-black on light ones).
 - Fonts: Montserrat, plus Geist Mono for small technical labels.

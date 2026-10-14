@@ -5,7 +5,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ArrowLeft, ArrowRight, CloseIcon } from '@/components/icons'
 import type { Photo } from '@/lib/content'
-import styles from './Lightbox.module.css'
 
 type Props = { photos: Photo[]; index: number; onClose: () => void; onIndex: (i: number) => void }
 
@@ -64,7 +63,7 @@ export function Lightbox({ photos, index, onClose, onIndex }: Props) {
   return createPortal(
     <div
       ref={dialog}
-      className={`site ${styles.overlay}`}
+      className="site fixed inset-0 z-100 grid animate-[fade_240ms_var(--ease)] touch-pan-y grid-rows-[auto_minmax(0,1fr)] bg-[rgb(6_7_8/0.97)] outline-none"
       role="dialog"
       aria-modal="true"
       aria-label="Photo viewer"
@@ -86,18 +85,20 @@ export function Lightbox({ photos, index, onClose, onIndex }: Props) {
         else if (dy > 110 && Math.abs(dy) > Math.abs(dx)) onClose()
       }}
     >
-      <div className={styles.bar}>
+      <div className="flex h-16 items-center justify-between px-(--gutter) py-2.5">
         <p className="t-meta" aria-live="polite">
           {String(index + 1).padStart(2, '0')} / {String(photos.length).padStart(2, '0')}
         </p>
-        <button type="button" className={styles.close} onClick={onClose}>
+        <button type="button" className="inline-flex h-11 items-center gap-2.5 pr-1 pl-3 text-[0.875rem] font-semibold text-fg" onClick={onClose}>
           <span>Close</span>
           <CloseIcon size={20} />
         </button>
       </div>
 
-      <figure className={styles.figure} onClick={(e) => e.target === e.currentTarget && onClose()}>
-        <div className={styles.stage} style={{ transform: dragX ? `translateX(${dragX}px)` : undefined }}>
+      <figure
+        className="grid min-h-0 grid-rows-[minmax(0,1fr)_auto] gap-4 px-(--gutter) pt-0 pb-[max(20px,env(safe-area-inset-bottom))] md:hoverable:px-24"
+        onClick={(e) => e.target === e.currentTarget && onClose()}>
+        <div className="relative min-h-0 [transition:transform_200ms_var(--ease)]" style={{ transform: dragX ? `translateX(${dragX}px)` : undefined }}>
           <Image
             key={photo.key}
             src={photo.image.src}
@@ -105,13 +106,13 @@ export function Lightbox({ photos, index, onClose, onIndex }: Props) {
             width={photo.image.width}
             height={photo.image.height}
             sizes="100vw"
-            className={styles.image}
+            className="absolute inset-0 size-full animate-[fade_360ms_var(--ease)] object-contain"
             preload
           />
         </div>
         {(photo.caption || photo.credit || photo.album.title) && (
-          <figcaption className={styles.caption}>
-            {photo.caption && <span className={styles.captionText}>{photo.caption}</span>}
+          <figcaption className="mx-auto grid max-w-[70ch] justify-items-center gap-1 text-center">
+            {photo.caption && <span className="text-[0.9375rem] text-fg">{photo.caption}</span>}
             <span className="t-meta">
               {[photo.album.title, photo.credit ? `Photo: ${photo.credit}` : null].filter(Boolean).join('  ·  ')}
             </span>
@@ -121,16 +122,16 @@ export function Lightbox({ photos, index, onClose, onIndex }: Props) {
 
       {photos.length > 1 && (
         <>
-          <button type="button" className={`${styles.nav} ${styles.prev}`} onClick={prev} aria-label="Previous photo">
+          <button type="button" className="absolute top-1/2 -mt-[26px] hidden size-[52px] place-items-center rounded-[50%] border border-line-2 bg-[rgb(11_12_14/0.6)] text-fg [transition:background-color_var(--dur-2)_var(--ease),border-color_var(--dur-2)_var(--ease)] hover:border-line-3 hover:bg-surface-3 md:hoverable:grid left-5" onClick={prev} aria-label="Previous photo">
             <ArrowLeft size={22} />
           </button>
-          <button type="button" className={`${styles.nav} ${styles.next}`} onClick={next} aria-label="Next photo">
+          <button type="button" className="absolute top-1/2 -mt-[26px] hidden size-[52px] place-items-center rounded-[50%] border border-line-2 bg-[rgb(11_12_14/0.6)] text-fg [transition:background-color_var(--dur-2)_var(--ease),border-color_var(--dur-2)_var(--ease)] hover:border-line-3 hover:bg-surface-3 md:hoverable:grid right-5" onClick={next} aria-label="Next photo">
             <ArrowRight size={22} />
           </button>
         </>
       )}
 
-      <div className={styles.preload} aria-hidden="true">
+      <div className="pointer-events-none absolute size-px overflow-hidden opacity-0" aria-hidden="true">
         {neighbours.map((p) =>
           p ? <Image key={p.key} src={p.image.src} alt="" width={p.image.width} height={p.image.height} sizes="100vw" /> : null,
         )}

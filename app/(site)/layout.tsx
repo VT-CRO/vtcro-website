@@ -33,7 +33,10 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
 
   return (
     <div className="site">
-      <a href="#main" className="skip-link">
+      <a
+        href="#main"
+        className="fixed -top-16 left-4 z-200 rounded-(--radius-s) bg-[#fff] px-4 py-2.5 text-[14px] font-semibold text-[#000] [transition:top_var(--dur-2)_var(--ease)] focus:top-3"
+      >
         Skip to content
       </a>
       <SiteHeader

@@ -3,9 +3,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { permanentRedirect } from 'next/navigation'
 import { ArrowLeft, ArrowUpRight, BookIcon, GitHubIcon, GlobeIcon, GraduationIcon, LinkedInIcon } from '@/components/icons'
+import { Button } from '@/components/ui/button'
+import { IconBadge } from '@/components/ui/icon-badge'
 import { Media } from '@/components/ui/Media'
 import { getMember, getMembers } from '@/lib/content'
-import styles from './page.module.css'
 import { DEFAULT_SHARE_IMAGE } from '@/lib/format'
 
 export const revalidate = false
@@ -51,50 +52,50 @@ export default async function MemberPage({ params }: { params: Promise<{ slug: s
   ].filter(Boolean) as { label: string; value: string; icon: typeof BookIcon }[]
 
   return (
-    <article className={styles.page}>
-      <div className="container">
-        <Link href="/team" className={`link-arrow ${styles.back}`}>
+    <article className="[background:radial-gradient(50%_40%_at_15%_0%,rgb(255_255_255/0.048),transparent_70%),var(--bg)] pt-[calc(var(--header-h)+clamp(28px,5vw,56px))]">
+      <div className="site-container">
+        <Link href="/team" className="link-arrow mb-[clamp(20px,3vw,36px)] text-fg-2">
           <ArrowLeft size={16} /> Team
         </Link>
 
-        <div className={styles.grid}>
-          <div className={styles.photo}>
+        <div className="grid gap-8 pb-(--section-y) min-[1000px]:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] min-[1000px]:items-start min-[1000px]:gap-[72px]">
+          <div className="relative aspect-[4/5] max-w-[520px] overflow-hidden rounded-(--radius-l) bg-surface-2 [box-shadow:var(--shadow-2),0_30px_80px_-40px_rgb(0_0_0/0.45)] min-[1000px]:sticky min-[1000px]:top-[calc(var(--header-h)+32px)] min-[1000px]:max-w-none">
             <Media img={member.photo} placeholder="Headshot" sizes="(min-width: 1000px) 34vw, 100vw" preload />
           </div>
 
-          <div className={styles.info}>
+          <div className="grid content-start gap-5 min-[1000px]:max-w-[620px] min-[1000px]:pt-3">
             <p className="t-label">{primary?.team.name ?? 'VT CRO'}</p>
-            <h1 className={`t-h1 ${styles.name}`}>{member.name}</h1>
-            {primary?.role && <p className={styles.role}>{primary.role}</p>}
+            <h1 className="t-h1 -mt-1">{member.name}</h1>
+            {primary?.role && <p className="text-[clamp(1.15rem,1rem+0.6vw,1.5rem)] font-semibold tracking-[-0.02em] text-accent">{primary.role}</p>}
 
             {facts.length > 0 && (
-              <dl className={styles.facts}>
+              <dl className="mt-2 grid grid-cols-[1fr_1fr] border-t border-line-2">
                 {facts.map((f) => (
-                  <div key={f.label}>
-                    <dt>
-                      <span className="icon-badge icon-badge--mono">
+                  <div key={f.label} className="grid gap-1.5 border-b border-line py-4">
+                    <dt className="flex items-center gap-2.5">
+                      <IconBadge className="rounded-[10px] [--size:32px]">
                         <f.icon size={18} />
-                      </span>
+                      </IconBadge>
                       <span className="t-label">{f.label}</span>
                     </dt>
-                    <dd>{f.value}</dd>
+                    <dd className="font-medium">{f.value}</dd>
                   </div>
                 ))}
               </dl>
             )}
 
             {member.roles.length > 0 && (
-              <div className={styles.teams}>
+              <div>
                 <p className="t-label">{member.roles.length > 1 ? 'Teams' : 'Team'}</p>
-                <ul>
+                <ul className="mt-3 grid border-t border-line">
                   {member.roles.map((r) => (
                     <li key={r.team.id}>
-                      <Link href={`/teams/${r.team.slug}`}>
-                        <span className={styles.teamName}>
-                          {r.team.logo && <Image src={r.team.logo.src} alt="" width={56} height={56} sizes="28px" className={styles.teamLogo} />}
+                      <Link href={`/teams/${r.team.slug}`} className="group/team flex justify-between gap-4 border-b border-line py-3.5">
+                        <span className="inline-flex items-center gap-2.5 font-semibold group-hover/team:text-accent">
+                          {r.team.logo && <Image src={r.team.logo.src} alt="" width={56} height={56} sizes="28px" className="size-7 rounded-[50%]" />}
                           {r.team.name}
                         </span>
-                        <span className={styles.teamRole}>{r.role}</span>
+                        <span className="text-right text-[0.875rem] text-fg-2">{r.role}</span>
                       </Link>
                     </li>
                   ))}
@@ -102,14 +103,16 @@ export default async function MemberPage({ params }: { params: Promise<{ slug: s
               </div>
             )}
 
-            {member.bio && <p className={`t-body ${styles.bio}`}>{member.bio}</p>}
+            {member.bio && <p className="t-body max-w-[60ch]">{member.bio}</p>}
 
             {links.length > 0 && (
-              <div className="btn-row">
+              <div className="flex flex-wrap gap-3">
                 {links.map((l) => (
-                  <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className="btn btn--secondary">
-                    <l.icon size={16} className="icon-static" /> {l.label} <ArrowUpRight size={14} />
-                  </a>
+                  <Button asChild variant="secondary" key={l.href}>
+                    <a href={l.href} target="_blank" rel="noreferrer">
+                      <l.icon size={16} className="icon-static" /> {l.label} <ArrowUpRight size={14} />
+                    </a>
+                  </Button>
                 ))}
               </div>
             )}

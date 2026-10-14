@@ -1,5 +1,6 @@
 import { PortableText, type PortableTextComponents } from '@portabletext/react'
 import type { PortableTextBlocks } from '@/lib/content'
+import { cn } from '@/lib/utils'
 
 const components: PortableTextComponents = {
   marks: {
@@ -18,7 +19,7 @@ const components: PortableTextComponents = {
 export function RichText({ value, className }: { value: PortableTextBlocks; className?: string }) {
   if (!value?.length) return null
   return (
-    <div className={`prose ${className ?? ''}`}>
+    <div className={cn('prose', className)}>
       <PortableText value={value} components={components} />
     </div>
   )

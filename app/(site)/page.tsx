@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { AwardLedger } from '@/components/awards/AwardLedger'
 import { EventCard } from '@/components/events/EventCard'
+import { EventGrid } from '@/components/events/EventGrid'
 import { About } from '@/components/home/About'
 import { ApplyBanner } from '@/components/home/ApplyBanner'
 import { Hero } from '@/components/home/Hero'
@@ -107,11 +108,11 @@ export default async function HomePage() {
                 </Link>
               }
             />
-            <div className="events-grid">
+            <EventGrid>
               {next.map((e) => (
                 <EventCard key={e.id} event={e} />
               ))}
-            </div>
+            </EventGrid>
           </Section>
         )
       }

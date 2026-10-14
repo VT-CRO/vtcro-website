@@ -16,14 +16,21 @@
     "@sanity/image-url": "^2.1.1",
     "@sanity/orderable-document-list": "^2.0.24",
     "@sanity/vision": "^6.16.0",
+    "@tailwindcss/postcss": "^4.3.3",
     "@vercel/analytics": "^2.0.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "next": "^16.3.6",
     "next-sanity": "^13.3.4",
+    "postcss": "^8.5.30",
+    "radix-ui": "^1.8.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "resend": "^6.30.0",
     "sanity": "^6.16.0",
-    "styled-components": "^6.5.3"
+    "styled-components": "^6.5.3",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@types/node": "^26.6.3",

@@ -3,8 +3,9 @@
 import Image from 'next/image'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { Photo } from '@/lib/content'
+import { Button } from '@/components/ui/button'
 import { Lightbox } from './Lightbox'
-import styles from './PhotoGrid.module.css'
+import { cn } from '@/lib/utils'
 
 const PAGE = 48
 const MAX_PER_ROW = 8
@@ -122,7 +123,11 @@ export function PhotoGrid({ photos, openKey }: { photos: Photo[]; openKey?: stri
     <>
       <ul
         ref={grid}
-        className={`${styles.grid} ${layout ? styles.justified : ''}`}
+        className={cn(
+          'flex flex-wrap gap-1.5 [--row:112px] min-[700px]:gap-2 min-[700px]:[--row:210px] min-[1200px]:gap-2.5 min-[1200px]:[--row:270px]',
+          // Measured layout (see justify()): each photo is placed at its exact size.
+          layout && 'relative block',
+        )}
         style={layout ? { height: layout.height } : undefined}
       >
         {visible.map((p, i) => {
@@ -131,10 +136,13 @@ export function PhotoGrid({ photos, openKey }: { photos: Photo[]; openKey?: stri
           return (
             <li
               key={p.key}
-              className={styles.item}
+              className={cn(
+                'relative aspect-(--ar) max-h-[calc(var(--row)*2.2)] grow-[calc(var(--ar)*100)] basis-[calc(var(--ar)*var(--row))] overflow-hidden rounded-[2px] bg-surface-2',
+                layout && 'absolute aspect-auto max-h-none',
+              )}
               style={box ? { left: box.x, top: box.y, width: box.w, height: box.h } : { ['--ar' as string]: ar }}
             >
-              <button type="button" className={styles.button} onClick={() => setOpen(i)} aria-label={`Open photo${p.image.alt ? `: ${p.image.alt}` : ''}`}>
+              <button type="button" className="group/photo absolute inset-0 w-full cursor-zoom-in" onClick={() => setOpen(i)} aria-label={`Open photo${p.image.alt ? `: ${p.image.alt}` : ''}`}>
                 <Image
                   src={p.image.src}
                   alt={p.image.alt}
@@ -144,23 +152,24 @@ export function PhotoGrid({ photos, openKey }: { photos: Photo[]; openKey?: stri
                       ? `${box.w}px`
                       : `(min-width: 1200px) ${Math.round(Math.min(60, ar * 22))}vw, (min-width: 700px) ${Math.round(Math.min(90, ar * 34))}vw, ${Math.round(Math.min(100, ar * 55))}vw`
                   }
+                  className="[transition:transform_900ms_var(--ease)] hoverable:group-hover/photo:[transform:scale(1.035)]"
                   style={{ objectFit: 'cover', objectPosition: p.image.position }}
                 />
               </button>
             </li>
           )
         })}
-        {!layout && <li className={styles.filler} aria-hidden="true" />}
+        {!layout && <li className="grow-[1000000] basis-0" aria-hidden="true" />}
       </ul>
 
       {photos.length > limit && (
-        <div className={styles.more}>
-          <button type="button" className="btn btn--secondary" onClick={() => setLimit((l) => l + PAGE)}>
+        <div className="mt-10 flex justify-center [&_.t-meta]:ml-1.5">
+          <Button variant="secondary" type="button" onClick={() => setLimit((l) => l + PAGE)}>
             Show more photos
             <span className="t-meta">
               {limit} / {photos.length}
             </span>
-          </button>
+          </Button>
         </div>
       )}
 
