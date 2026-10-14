@@ -254,6 +254,7 @@ export type PeopleDirectory = {
   support: TeamPerson[]
   /** Teams each person belongs to, for card labels. */
   teamsOf: Record<string, TeamSummary[]>
+  /** Everyone on an active team, including people hidden from the page for lacking a photo. */
   total: number
 }
 
@@ -281,7 +282,9 @@ export const getPeopleDirectory = cache(async (): Promise<PeopleDirectory> => {
   const executive = collect(docs.filter((t) => t.leadershipGroup))
   const engineering = collect(docs.filter((t) => !t.leadershipGroup && t.teamType !== 'support')).sort(byName)
   const support = collect(docs.filter((t) => !t.leadershipGroup && t.teamType === 'support')).sort(byName)
-  return { executive, engineering, support, teamsOf, total: placed.size }
+  // People without a profile photo are left off the page, but still count toward the member total.
+  const withPhoto = (ps: TeamPerson[]) => ps.filter((p) => p.member.photo)
+  return { executive: withPhoto(executive), engineering: withPhoto(engineering), support: withPhoto(support), teamsOf, total: placed.size }
 })
 
 export const getMembers = cache(async (): Promise<MemberSummary[]> => {
