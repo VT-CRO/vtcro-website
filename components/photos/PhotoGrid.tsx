@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { AnimatePresence } from 'motion/react'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { Photo } from '@/lib/content'
 import { Button } from '@/components/ui/button'
@@ -173,7 +174,7 @@ export function PhotoGrid({ photos, openKey }: { photos: Photo[]; openKey?: stri
         </div>
       )}
 
-      {open !== null && <Lightbox photos={photos} index={open} onIndex={setOpen} onClose={() => setOpen(null)} />}
+      <AnimatePresence>{open !== null && <Lightbox key="lightbox" photos={photos} index={open} onIndex={setOpen} onClose={() => setOpen(null)} />}</AnimatePresence>
     </>
   )
 }

@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { motion } from 'motion/react'
 import { ArrowLeft, ArrowRight, CloseIcon } from '@/components/icons'
 import type { Photo } from '@/lib/content'
 
@@ -61,9 +62,13 @@ export function Lightbox({ photos, index, onClose, onIndex }: Props) {
   if (!mounted || !photo) return null
 
   return createPortal(
-    <div
+    <motion.div
       ref={dialog}
-      className="site fixed inset-0 z-100 grid animate-[fade_240ms_var(--ease)] touch-pan-y grid-rows-[auto_minmax(0,1fr)] bg-[rgb(6_7_8/0.97)] outline-none"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 0.18 } }}
+      transition={{ duration: 0.24, ease: [0.22, 0.61, 0.36, 1] }}
+      className="site fixed inset-0 z-100 grid touch-pan-y grid-rows-[auto_minmax(0,1fr)] bg-[rgb(6_7_8/0.97)] outline-none"
       role="dialog"
       aria-modal="true"
       aria-label="Photo viewer"
@@ -136,7 +141,7 @@ export function Lightbox({ photos, index, onClose, onIndex }: Props) {
           p ? <Image key={p.key} src={p.image.src} alt="" width={p.image.width} height={p.image.height} sizes="100vw" /> : null,
         )}
       </div>
-    </div>,
+    </motion.div>,
     document.body,
   )
 }

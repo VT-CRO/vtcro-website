@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
+import { ScrollReveal } from '@/components/motion/ScrollReveal'
 import { SiteFooter } from '@/components/site/SiteFooter'
 import { SiteHeader } from '@/components/site/SiteHeader'
 import { getSite, getTeams } from '@/lib/content'
@@ -50,6 +51,7 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
         {children}
       </main>
       <SiteFooter site={site} nav={NAV} designTeams={design} supportTeams={support} />
+      <ScrollReveal />
       <Analytics />
     </div>
   )
